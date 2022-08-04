@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_16">
+    <output url="file://$MODULE_DIR$/User/target/classes" />
+    <output-test url="file://$MODULE_DIR$/User/target/test-classes" />
+    <content url="file://$MODULE_DIR$/User">
+      <sourceFolder url="file://$MODULE_DIR$/User/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/User/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/User/src/test/java" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/User/target" />
+    </content>
+    <orderEntry type="jdk" jdkName="16" jdkType="JavaSDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.json:json:20090211" level="project" />
+  </component>
+</module>
