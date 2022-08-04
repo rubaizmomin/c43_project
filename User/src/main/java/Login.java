@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 public class Login extends Endpoint{
 
-    public mysqlDAO dao;
     @Override
     public void handlePost(HttpExchange r) throws IOException, JSONException, SQLException {
         String body = Utils.convert(r.getRequestBody());

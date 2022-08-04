@@ -5,37 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db41110c-4ab4-476f-8cad-05309a4fbf06" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_19_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_cdimascio_dotenv_java_2_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_30.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_json_json_20090211.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ApiGateway/ApiGatetway.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ApiGateway/ApiGateway.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/mysqlfiles/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/mysqlfiles/user.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGetway/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGetway/src/main/java/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGetway/src/main/java/RequestRouter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGetway/src/main/java/UserRouter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGetway/src/main/java/Utils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGetway/target/classes/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGetway/target/classes/RequestRouter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGetway/target/classes/UserRouter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGetway/target/classes/Utils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/User.iml" beforeDir="false" afterPath="$PROJECT_DIR$/User/User.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/User/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiGateway/ApiGateway.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateway/ApiGateway.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiGateway/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiGateway/target/classes/UserRouter.class" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateway/target/classes/UserRouter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/mysqlfiles/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/mysqlfiles/user.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/src/main/java/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/Login.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/src/main/java/mysqlDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/User/src/main/java/mysqlDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/target/classes/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/target/classes/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/target/classes/Login.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/target/classes/Login.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/target/classes/mysqlDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/User/target/classes/mysqlDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +53,10 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/rubai/c43_project"
+    "last_opened_file_path": "C:/Users/rubai/c43_project/User/src/main/java/mysql-connector-java-8.0.30.jar",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
   <component name="RunManager">

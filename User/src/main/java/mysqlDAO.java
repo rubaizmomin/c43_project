@@ -6,20 +6,20 @@ public class mysqlDAO {
 
     public Connection conn;
     public Statement st;
-    String username = "root";
-    String password = "password";
-
     public mysqlDAO(){
-        Dotenv dotenv = Dotenv.load();
-        String addr = dotenv.get("MYSQL_ADDR");
-        String url = "jdbc:mysql://" + addr + ":3306/?user=root&password=password";
+        String url = "jdbc:mysql://localhost:3306/c43_project";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver loaded");
-            this.conn = DriverManager.getConnection(url, username, password);
+            this.conn = DriverManager.getConnection(url, "root", "");
             this.st =this.conn.createStatement();
+//            int result = st.executeUpdate("GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;");
+//            result = st.executeUpdate("FLUSH PRIVILEGES;");
+//            result = st.executeUpdate("USE DATABASE c43_project");
+//            st.executeQuery("CREATE DATABASE [IF NOT EXISTS] c43_project;");
             System.out.println("Database connected!");
         } catch (Exception e) {
+            e.printStackTrace();
             throw new IllegalStateException("Cannot connect the database!", e);
         }
     }
