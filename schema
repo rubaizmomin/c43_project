@@ -1,0 +1,106 @@
+USE c43_project;
+
+DROP TABLE IF EXISTS Users, Renter, Host, Listing, Calendar, Amenity, available, has, rents, owns, review;
+
+-- Entity Set
+CREATE TABLE Users (
+    email varchar(30) NOT NULL PRIMARY KEY,
+    password varchar(30) NOT NULL,
+    name varchar(30) NOT NULL,
+    address varchar(30) NOT NULL,
+    dob varchar(10) NOT NULL,
+    occupation varchar(30) NOT NULL,
+    sin int NOT NULL UNIQUE
+);
+
+CREATE TABLE Renter (
+	email varchar(30) NOT NULL PRIMARY KEY,
+    password varchar(30) NOT NULL,
+    name varchar(30) NOT NULL,
+    address varchar(30) NOT NULL,
+    dob varchar(10) NOT NULL,
+    occupation varchar(30) NOT NULL,
+    sin int NOT NULL UNIQUE,
+    payment_info int UNIQUE
+);
+
+CREATE TABLE Host (
+	email varchar(30) NOT NULL PRIMARY KEY,
+    password varchar(30) NOT NULL,
+    name varchar(30) NOT NULL,
+    address varchar(30) NOT NULL,
+    dob varchar(10) NOT NULL,
+    occupation varchar(30) NOT NULL,
+    sin int NOT NULL UNIQUE,
+);
+
+CREATE TABLE Listing (
+    l_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    listing_type varchar(30) NOT NULL,
+    postal_code varchar(6) NOT NULL,
+    home_address varchar(30) NOT NULL,
+    city varchar (30) NOT NULL,
+    country varchar (30) NOT NULL,
+    latitude float NOT NULL,
+    longitude float NOT NULL
+);
+
+CREATE TABLE Calendar (
+	available_date date NOT NULL PRIMARY KEY,
+    rental_price float NOT NULL
+);
+
+CREATE TABLE Amenity (
+	a_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	amenity_type varchar (30) NOT NULL
+);
+
+-- Relationships
+CREATE TABLE available (
+	l_id int NOT NULL,
+    available_date date NOT NULL,
+    PRIMARY KEY (l_id, available_date),
+    FOREIGN KEY (l_id) REFERENCES Listing (l_id),
+    FOREIGN KEY (available_date) REFERENCES Calendar (available_date)
+);
+
+CREATE TABLE has (
+	l_id int NOT NULL,
+    a_id int NOT NULL,
+    PRIMARY KEY (l_id, a_id),
+    FOREIGN KEY (a_id) REFERENCES Amenity (a_id),
+    FOREIGN KEY (l_id) REFERENCES Listing (l_id)
+);
+
+CREATE TABLE rents (
+	rent_date date NOT NULL,
+	rating int,
+	comment varchar(30),
+    email varchar(30) NOT NULL,
+    l_id int NOT NULL,
+    PRIMARY KEY (rent_date, l_id)
+    FOREIGN KEY (email) REFERENCES Renter (email),
+    FOREIGN KEY (l_id) REFERENCES Listing (l_id)
+);
+
+CREATE TABLE owns (
+    email varchar(30) NOT NULL,
+    l_id int NOT NULL,
+    PRIMARY KEY (l_id),
+    FOREIGN KEY (email) REFERENCES Host (email),
+    FOREIGN KEY (l_id) REFERENCES Listing (l_id)
+);
+
+CREATE TABLE review (
+    booking_date date NOT NULL,
+    l_id int NOT NULL,
+    host_rating int,
+    host_comment varchar(30),
+    renter_rating int,
+    renter_comment varchar(30),
+    host_email NOT NULL,
+    renter_email NOT NULL,
+    PRIMARY KEY (booking_date, l_id, host_email, renter_email),
+    FOREIGN KEY (host_email) REFERENCES Host (email),
+    FOREIGN KEY (renter_email) REFERENCES Renter (email)
+);
