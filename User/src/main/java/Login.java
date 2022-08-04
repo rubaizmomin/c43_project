@@ -15,8 +15,7 @@ public class Login extends Endpoint{
         JSONObject deserialized = new JSONObject(body);
         String email = null;
         String password = null;
-        if(!deserialized.has("email") || !deserialized.has("password"))
-        {
+        if (!deserialized.has("email") || !deserialized.has("password")) {
             this.sendStatus(r, 400);
             return;
         }
@@ -48,6 +47,19 @@ public class Login extends Endpoint{
             this.sendStatus(r, 500);
             return;
         }
+        // check if user with given name, email, password exists, return 400 if yes:
+        if (!resultHasNext) {
+            ResultSet rs2 = this.dao.checkEmail(email);
+            resultHasNext = rs2.next();
+            if (!resultHasNext) {
+                this.sendStatus(r, 404);
+                return;
+            }
+            //Password is incorrect if you reach here with valid email.
+            this.sendStatus(r, 401);
+        }
+        // update db, return 500 if error:
+        this.sendStatus(r, 200);
+        return;
     }
-
 }
