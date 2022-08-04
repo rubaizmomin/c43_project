@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.http.HttpResponse;
 
 public class UserRouter extends RequestRouter{
-    public String url = "http://usermicroservice:8000";
+    public String url = "http://localhost:8001";
     @Override
     public void handlePost(HttpExchange r) throws JSONException, IOException, InterruptedException {
         String[] splitUrl = r.getRequestURI().getPath().split("/");
