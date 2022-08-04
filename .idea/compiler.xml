@@ -6,9 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ApiGetway" />
+        <module name="ApiGateway" />
         <module name="User" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ApiGateway" target="16" />
+      <module name="User" target="16" />
+    </bytecodeTargetLevel>
   </component>
 </project>

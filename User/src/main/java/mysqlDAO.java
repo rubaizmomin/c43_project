@@ -1,14 +1,18 @@
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.sql.*;
 
 public class mysqlDAO {
 
     public Connection conn;
     public Statement st;
-    String url = "jdbc:mysql://localhost:3306/c43_project";
     String username = "root";
-    String password = "";
+    String password = "password";
 
     public mysqlDAO(){
+        Dotenv dotenv = Dotenv.load();
+        String addr = dotenv.get("MYSQL_ADDR");
+        String url = "jdbc:mysql://" + addr + ":3306/?user=root&password=password";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("Driver loaded");

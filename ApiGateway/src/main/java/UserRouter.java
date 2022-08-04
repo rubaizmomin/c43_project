@@ -26,6 +26,7 @@ public class UserRouter extends RequestRouter{
                 String bodyJsonStr = bodyJson.toString();
                 System.out.println(bodyJsonStr);
                 HttpResponse<String> s = this.sendRequestPost(r.getRequestMethod(), url, r.getRequestURI().toString(), bodyJsonStr);
+                System.out.println(s.body());
                 this.sendResponse(r, new JSONObject(s.body()), s.statusCode());
                 return;
             default:
