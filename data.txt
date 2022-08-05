@@ -7,7 +7,18 @@ Add listing
     "country": "canada",
     "latitude": "123.45",
     "longitude": "123.45",
-    "email": "rubaiz@gmail.com"
+    "u_id": "1"
+}
+
+{
+    "listing_type": "Apartment",
+    "postal_code": "A1A1A1",
+    "home_address": "utsc IC",
+    "city": "toronto",
+    "country": "canada",
+    "latitude": "123.45",
+    "longitude": "123.45",
+    "u_id": "2"
 }
 
 Add user
