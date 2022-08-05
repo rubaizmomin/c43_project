@@ -14,6 +14,7 @@ public class App {
         server.createContext("/user", new UserRouter());
         server.createContext("/listing", new ListingRouter());
         server.createContext("/host", new HostRouter());
+        server.createContext("/amenity", new AmenityRouter());
 
         server.start();
         System.out.println("1");
