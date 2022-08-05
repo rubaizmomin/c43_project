@@ -36,7 +36,7 @@ CREATE TABLE Listing (
 );
 
 CREATE TABLE Calendar (
-	available_date char(10) NOT NULL PRIMARY KEY
+	available_date date NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE Amenity (
