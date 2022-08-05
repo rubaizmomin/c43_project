@@ -20,7 +20,7 @@ CREATE TABLE Renter (
 );
 
 CREATE TABLE Host (
-	email varchar(30) NOT NULL,
+	email varchar(30) UNIQUE NOT NULL,
     FOREIGN KEY (email) REFERENCES Users (email)
 );
 
