@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ApiGateway/ApiGateway.iml" filepath="$PROJECT_DIR$/ApiGateway/ApiGateway.iml" />
-      <module fileurl="file://$PROJECT_DIR$/User/User.iml" filepath="$PROJECT_DIR$/User/User.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/c43_project.iml" filepath="$PROJECT_DIR$/.idea/c43_project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/User/usermicroservice.iml" filepath="$PROJECT_DIR$/User/usermicroservice.iml" />
     </modules>
   </component>
 </project>

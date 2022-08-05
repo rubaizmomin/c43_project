@@ -113,7 +113,18 @@ public class Register extends Endpoint{
             this.sendStatus(r, 500);
             return;
         }
-        this.sendStatus(r, 200);
+        JSONObject json = new JSONObject();
+        try{
+            ResultSet rs3 = this.dao.getUserfromUid(email);
+            if(rs3.next()){
+                json.put("u_id", rs3.getInt("u_id"));
+            }
+        }catch (Exception e){
+            this.sendStatus(r, 500);
+            System.out.println("Cant get users from Uid");
+            return;
+        }
+        this.sendResponse(r, json,200);
         return;
     }
 }

@@ -1,0 +1,22 @@
+Add listing
+{
+    "listing_type": "Apartment",
+    "postal_code": "A1A1A1",
+    "home_address": "utsc",
+    "city": "toronto",
+    "country": "canada",
+    "latitude": "123.45",
+    "longitude": "123.45",
+    "email": "rubaiz@gmail.com"
+}
+
+Add user
+{
+    "name" : "Rubaiz",
+    "password" : "Rubaiz",
+    "email" : "rubaiz@gmail.com",
+    "address": "utsc",
+    "occupation": "student",
+    "sin": 1234567890,
+    "dob": "15/10/2001"
+}

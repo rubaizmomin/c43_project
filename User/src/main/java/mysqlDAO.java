@@ -23,7 +23,11 @@ public class mysqlDAO {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
     }
-
+    public ResultSet getUserfromUid(String email) throws SQLException {
+        String query = "SELECT * FROM Users WHERE email = '%s'";
+        query = String.format(query, email);
+        return this.st.executeQuery(query);
+    }
     public ResultSet checkEmail(String email) throws SQLException {
         String query = "SELECT * FROM users WHERE email = '%s'";
         query = String.format(query, email);
