@@ -8,7 +8,7 @@ CREATE TABLE Users (
     password varchar(30) NOT NULL,
     name varchar(30) NOT NULL,
     address varchar(30) NOT NULL,
-    dob varchar(10) NOT NULL,
+    dob char(10) NOT NULL,
     occupation varchar(30) NOT NULL,
     sin int NOT NULL UNIQUE
 );
@@ -27,7 +27,7 @@ CREATE TABLE Host (
 CREATE TABLE Listing (
     l_id int NOT NULL AUTO_INCREMENT UNIQUE,
     listing_type varchar(30) NOT NULL,
-    postal_code varchar(6) NOT NULL,
+    postal_code char(6) NOT NULL,
     home_address varchar(30) NOT NULL PRIMARY KEY,
     city varchar (30) NOT NULL,
     country varchar (30) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE Listing (
 );
 
 CREATE TABLE Calendar (
-	available_date date NOT NULL PRIMARY KEY,
+	available_date char(10) NOT NULL PRIMARY KEY,
 );
 
 CREATE TABLE Amenity (
