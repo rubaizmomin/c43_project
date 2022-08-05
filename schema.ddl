@@ -3,6 +3,7 @@ USE c43_project;
 DROP TABLE IF EXISTS Users, Renter, Host, Listing, Calendar, Amenity, available, has, rents, owns, review;
 
 CREATE TABLE Users (
+    u_id int NOT NULL AUTO_INCREMENT UNIQUE,
     email varchar(30) NOT NULL PRIMARY KEY,
     password varchar(30) NOT NULL,
     name varchar(30) NOT NULL,
