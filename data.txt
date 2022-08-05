@@ -20,3 +20,13 @@ Add user
     "sin": 1234567890,
     "dob": "15/10/2001"
 }
+
+{
+    "name" : "Yena",
+    "password" : "Yena",
+    "email" : "yena@gmail.com",
+    "address": "utsc",
+    "occupation": "student",
+    "sin": 1234567890,
+    "dob": "15/10/2001"
+}
