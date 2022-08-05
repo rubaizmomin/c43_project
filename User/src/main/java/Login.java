@@ -7,6 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Login extends Endpoint{
+    /**
+     * POST /user/login
+     * @body email, password
+     * @return 200, 400, 401, 404, 500
+     * Login a user into the system if the given information matches the
+     * information of the user in the database.
+     */
 
     @Override
     public void handlePost(HttpExchange r) throws IOException, JSONException, SQLException {
@@ -58,7 +65,9 @@ public class Login extends Endpoint{
             this.sendStatus(r, 401);
         }
         // update db, return 500 if error:
-        this.sendStatus(r, 200);
+        JSONObject json = new JSONObject();
+        json.put("email", email);
+        this.sendResponse(r, json, 200);
         return;
     }
 }

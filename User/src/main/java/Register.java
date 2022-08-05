@@ -9,11 +9,16 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Register extends Endpoint{
+    /**
+     * POST /user/register
+     * @body name, email, password, occupation, address, sin, dob
+     * @return 200, 400, 500
+     * Register a user into the system using the given information.
+     */
     @Override
     public void handlePost(HttpExchange r) throws IOException, JSONException, SQLException {
         // uri checked completely at this point
         // check body:
-        System.out.println("4");
         String body = Utils.convert(r.getRequestBody());
         JSONObject deserialized = new JSONObject(body);
         String name = null;
@@ -63,8 +68,17 @@ public class Register extends Endpoint{
             dob = deserialized.getString("dob");
             //"day/month/year"
             String[] splitUrl = dob.split("/");
-            LocalDate birthdate = LocalDate.of(Integer.parseInt(splitUrl[2]), Integer.parseInt(splitUrl[1]), Integer.parseInt(splitUrl[0]));
-            LocalDate today = LocalDate.now();
+            LocalDate birthdate = null;
+            LocalDate today = null;
+            try {
+                birthdate = LocalDate.of(Integer.parseInt(splitUrl[2]), Integer.parseInt(splitUrl[1]), Integer.parseInt(splitUrl[0]));
+                today = LocalDate.now();
+            } catch(Exception e)
+            {
+                e.printStackTrace();
+                this.sendStatus(r, 400);
+                return;
+            }
             Period period = Period.between(birthdate, today);
             if (period.getYears() < 18) {
                 this.sendStatus(r, 400);
@@ -113,7 +127,9 @@ public class Register extends Endpoint{
             this.sendStatus(r, 500);
             return;
         }
-        this.sendStatus(r, 200);
+        JSONObject json = new JSONObject();
+        json.put("email", email);
+        this.sendResponse(r, json,200);
         return;
     }
 }

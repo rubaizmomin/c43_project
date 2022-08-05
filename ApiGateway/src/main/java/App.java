@@ -12,6 +12,8 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress(hostname, PORT), backlog);
 
         server.createContext("/user", new UserRouter());
+        server.createContext("/listing", new ListingRouter());
+        server.createContext("/host", new HostRouter());
 
         server.start();
         System.out.println("1");

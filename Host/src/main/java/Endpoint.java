@@ -1,6 +1,8 @@
-
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
@@ -9,8 +11,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.SQLException;
 import java.util.HashMap;
-import org.json.JSONObject;
-import org.json.JSONException;
 
 public abstract class Endpoint implements HttpHandler {
 
@@ -66,14 +66,6 @@ public abstract class Endpoint implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-    public HttpResponse<String> sendRequest(String method, String url, String uri, String body) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest req = HttpRequest.newBuilder()
-                .method(method, HttpRequest.BodyPublishers.ofString(body))
-                .uri(URI.create(url + uri))
-                .build();
-        return client.send(req, HttpResponse.BodyHandlers.ofString());
-    }
 
     public void sendResponse(HttpExchange r, JSONObject obj, int statusCode) throws JSONException, IOException {
         obj.put("status", errorMap.get(statusCode));
@@ -82,6 +74,14 @@ public abstract class Endpoint implements HttpHandler {
         this.writeOutputStream(r, response);
     }
 
+    public HttpResponse<String> sendRequest(String method, String url, String uri, String body) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest.newBuilder()
+                .method(method, HttpRequest.BodyPublishers.ofString(body))
+                .uri(URI.create(url + uri))
+                .build();
+        return client.send(req, HttpResponse.BodyHandlers.ofString());
+    }
     public void sendStatus(HttpExchange r, int statusCode) throws JSONException, IOException {
         JSONObject res = new JSONObject();
         res.put("status", errorMap.get(statusCode));
