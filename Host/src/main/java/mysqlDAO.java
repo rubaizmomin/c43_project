@@ -23,5 +23,11 @@ public class mysqlDAO {
         this.st.execute(query);
         return;
     }
+
+    public ResultSet checkEmail(String email) throws SQLException {
+        String query = "SELECT * FROM Host WHERE email = '%s'";
+        query = String.format(query, email);
+        return this.st.executeQuery(query);
+    }
 }
 
