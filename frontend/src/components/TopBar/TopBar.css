@@ -1,0 +1,24 @@
+.topbar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    width: 100%;
+    height: auto;
+    background-color: #eee;
+}
+
+.topbar-container>.page-title {
+    cursor: pointer;
+    width: auto;
+    height: auto;
+}
+
+.topbar-container button {
+    padding: 5px 10px;
+}
+
+.topbar-container button:not(:last-child) {
+    margin-right: 10px;
+}

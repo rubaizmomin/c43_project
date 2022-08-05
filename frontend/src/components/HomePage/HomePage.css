@@ -1,0 +1,11 @@
+.home-contianer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.home-contianer>button {
+    padding: 5px 10px;
+}
