@@ -46,10 +46,28 @@
     margin-bottom: 5px;
 }
 
-.auth-container>.auth-form>input {
+.auth-container>.auth-form input {
     margin-bottom: 5px;
     padding: 5px;
     width: 100%;
+}
+
+.auth-container>.auth-form>.auth-dob {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.auth-container>.auth-form>.auth-dob>select {
+    padding: 5px;
+    width: 100%;
+}
+
+.auth-container>.auth-form>.auth-dob>select:not(:last-child) {
+    margin-right: 10px;
 }
 
 .auth-container .auth-button {
