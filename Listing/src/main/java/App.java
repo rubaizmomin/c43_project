@@ -10,6 +10,7 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", PORT), 0);
         // TODO: Add server contexts here. Do not set executors for the server, you shouldn't need them.
         System.out.println("I am here");
+        server.createContext("/listing/addavailable", new Available());
         server.createContext("/listing/add", new AddListing());
 //        server.createContext("/user/register", new Register());
         server.start();

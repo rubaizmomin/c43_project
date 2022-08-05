@@ -10,14 +10,11 @@ public class App {
         String hostname = "0.0.0.0";
         int backlog = 0;
         HttpServer server = HttpServer.create(new InetSocketAddress(hostname, PORT), backlog);
-
         server.createContext("/user", new UserRouter());
         server.createContext("/listing", new ListingRouter());
         server.createContext("/host", new HostRouter());
         server.createContext("/amenity", new AmenityRouter());
-
         server.start();
-        System.out.println("1");
         System.out.printf("Server started on port %d...\n", PORT);
     }
 }

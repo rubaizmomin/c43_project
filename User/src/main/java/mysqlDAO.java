@@ -29,13 +29,19 @@ public class mysqlDAO {
         query = String.format(query, email);
         return this.st.executeQuery(query);
     }
+
+    public ResultSet getUserfromEmail(String email) throws SQLException {
+        String query = "SELECT * FROM Users WHERE email = '%s'";
+        query = String.format(query, email);
+        return this.st.executeQuery(query);
+    }
     public ResultSet checkLogin(String email, String password) throws SQLException {
         String query = "SELECT * FROM Users WHERE email = '%s' AND password = '%s'";
         query = String.format(query, email, password);
         return this.st.executeQuery(query);
     }
 
-    public void addUser(String name, String email, String password, String address, String occupation, Integer sin, String dob) throws SQLException {
+    public void addUser(String name, String email, String password, String address, String occupation, Long sin, String dob) throws SQLException {
         String query = "INSERT INTO Users (name, email, password, address, occupation, sin, dob) VALUES ('%s', '%s','%s', '%s', '%s', %d, '%s')";
         query = String.format(query, name, email, password, address, occupation, sin, dob);
         this.st.execute(query);

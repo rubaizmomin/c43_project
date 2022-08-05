@@ -28,6 +28,11 @@ public class mysqlDAO {
         return;
     }
 
+    public ResultSet getEmailfromUid(Integer u_id) throws SQLException {
+        String query = "SELECT email FROM Users WHERE u_id = %d";
+        query = String.format(query, u_id);
+        return this.st.executeQuery(query);
+    }
 
     public void addlistingtoOwns(String email, String home_address) throws SQLException {
         String query ="INSERT INTO owns (email, home_address) VALUES ('%s', '%s')";
@@ -36,10 +41,43 @@ public class mysqlDAO {
         return;
     }
 
+    public ResultSet CheckAvailability(String home_address, String date) throws SQLException {
+        String query = "SELECT * FROM Available WHERE home_address = '%s' and available_date = '%s'";
+        query = String.format(query, home_address, date);
+        return this.st.executeQuery(query);
+    }
     public ResultSet getDataThroughAddress(String home_address) throws SQLException {
         String query = "SELECT * FROM Listing WHERE home_address = '%s'";
         query = String.format(query, home_address);
         return this.st.executeQuery(query);
+    }
+    public ResultSet getDataThroughLid(Integer l_id) throws SQLException {
+        String query = "SELECT * FROM Listing WHERE l_id = %d";
+        query = String.format(query, l_id);
+        return this.st.executeQuery(query);
+    }
+
+    public void AddDatetoCalendar(String date) throws SQLException {
+        String query = "INSERT INTO Calendar (available_date) VALUES ('%s')";
+        query = String.format(query, date);
+        this.st.execute(query);
+        return;
+    }
+
+    public ResultSet CheckDate(String date) throws SQLException {
+        String query = "SELECT * FROM Calendar WHERE available_date = '%s'";
+        query = String.format(query, date);
+        return this.st.executeQuery(query);
+    }
+    public ResultSet checkListingAuthorization(String email, Integer l_id) throws SQLException {
+        String query = "SELECT * FROM owns NATURAL JOIN Listing WHERE email = '%s' and l_id = %d";
+        query = String.format(query, email, l_id);
+        return this.st.executeQuery(query);
+    }
+    public void AddAvailability(String home_address, String available_date, Double rental_price) throws SQLException {
+        String query = "INSERT INTO Available (home_address, available_date, rental_price) VALUES ('%s', '%s', %f)";
+        query = String.format(query, home_address, available_date, rental_price);
+        this.st.execute(query);
     }
 }
 

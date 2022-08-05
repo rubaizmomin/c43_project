@@ -26,7 +26,7 @@ public class Register extends Endpoint{
         String password = null;
         String occupation = null;
         String address = null;
-        Integer sin = null;
+        Long sin = null;
         String dob = null;
         if (!deserialized.has("name") || !deserialized.has("email") || !deserialized.has("password") || !deserialized.has("occupation")|| !deserialized.has("address") || !deserialized.has("sin") || !deserialized.has("dob")) {
             this.sendStatus(r, 400);
@@ -93,11 +93,11 @@ public class Register extends Endpoint{
             occupation = deserialized.getString("occupation");
         }
         if (deserialized.has("sin")) {
-            if (deserialized.get("sin").getClass() != Integer.class) {
+            if (deserialized.get("sin").getClass() != Long.class) {
                 this.sendStatus(r, 400);
                 return;
             }
-            sin = deserialized.getInt("sin");
+            sin = deserialized.getLong("sin");
         }
         // if all the variables are still null then there's no variables in request so retrun 400:
         if (name == null && email == null && password == null && address == null && occupation == null && sin == null && dob == null) {
@@ -128,7 +128,16 @@ public class Register extends Endpoint{
             return;
         }
         JSONObject json = new JSONObject();
-        json.put("email", email);
+        try{
+            ResultSet rs3 = this.dao.getUserfromEmail(email);
+            if(rs3.next()){
+                json.put("u_id", rs3.getInt("u_id"));
+            }
+        }catch (Exception e){
+            this.sendStatus(r, 500);
+            System.out.println("Cant get users from Uid");
+            return;
+        }
         this.sendResponse(r, json,200);
         return;
     }

@@ -19,19 +19,20 @@ public class AddListing extends Endpoint{
         String country = null;
         String lat = null;
         String lon = null;
+        String u_id = null;
         String email = null;
-        if (!deserialized.has("email")|| !deserialized.has("listing_type") || !deserialized.has("postal_code")|| !deserialized.has("home_address") || !deserialized.has("city")|| !deserialized.has("country")|| !deserialized.has("latitude") || !deserialized.has("longitude")) {
+        if (!deserialized.has("u_id")|| !deserialized.has("listing_type") || !deserialized.has("postal_code")|| !deserialized.has("home_address") || !deserialized.has("city")|| !deserialized.has("country")|| !deserialized.has("latitude") || !deserialized.has("longitude")) {
 
             this.sendStatus(r, 400);
             return;
 
         }
-        if (deserialized.has("email")) {
-            if (deserialized.get("email").getClass() != String.class) {
+        if (deserialized.has("u_id")) {
+            if (deserialized.get("u_id").getClass() != String.class) {
                 this.sendStatus(r, 400);
                 return;
             }
-            email = deserialized.getString("email");
+            u_id = deserialized.getString("u_id");
         }
         if (deserialized.has("listing_type")) {
             if (deserialized.get("listing_type").getClass() != String.class) {
@@ -127,11 +128,16 @@ public class AddListing extends Endpoint{
             System.out.println("error in addListing");
             return;
         }
+
         try{
             String uri = "/host/register";
             String url = "http://localhost:8003";
             JSONObject hostjson = new JSONObject();
-            hostjson.put("email", email);
+            ResultSet emaildata = this.dao.getEmailfromUid(Integer.parseInt(u_id));
+            if(emaildata.next()) {
+                email = emaildata.getString("email");
+                hostjson.put("email", email);
+            }
             HttpResponse<String> s2 = this.sendRequest("POST", url, uri, hostjson.toString());
             if(s2.statusCode() != 200)
             {

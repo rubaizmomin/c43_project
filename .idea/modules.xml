@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/ApiGateway/ApiGateway.iml" filepath="$PROJECT_DIR$/ApiGateway/ApiGateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/Host/Host.iml" filepath="$PROJECT_DIR$/Host/Host.iml" />
       <module fileurl="file://$PROJECT_DIR$/Listing/Listing.iml" filepath="$PROJECT_DIR$/Listing/Listing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Amenity/amenitymicroservice.iml" filepath="$PROJECT_DIR$/Amenity/amenitymicroservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/c43_project.iml" filepath="$PROJECT_DIR$/.idea/c43_project.iml" />
       <module fileurl="file://$PROJECT_DIR$/User/usermicroservice.iml" filepath="$PROJECT_DIR$/User/usermicroservice.iml" />
     </modules>
