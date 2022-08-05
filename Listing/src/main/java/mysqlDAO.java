@@ -21,6 +21,12 @@ public class mysqlDAO {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
     }
+
+    public ResultSet getUserfromUid(Integer u_id) throws SQLException {
+        String query = "SELECT * FROM Users WHERE u_id = %d";
+        query = String.format(query, u_id);
+        return this.st.executeQuery(query);
+    }
     public void addlisting(String listing_type, String postal_code, String home_address, String city, String country, Float lat, Float lon) throws SQLException {
         String query ="INSERT INTO Listing (listing_type, postal_code, home_address, city, country, latitude, longitude) VALUES ('%s', '%s', '%s', '%s', '%s', %f, %f)";
         query =String.format(query, listing_type, postal_code, home_address, city, country, lat, lon);
@@ -75,8 +81,10 @@ public class mysqlDAO {
         return this.st.executeQuery(query);
     }
     public void AddAvailability(String home_address, String available_date, Double rental_price) throws SQLException {
+
         String query = "INSERT INTO Available (home_address, available_date, rental_price) VALUES ('%s', '%s', %f)";
         query = String.format(query, home_address, available_date, rental_price);
+        System.out.println(query);
         this.st.execute(query);
     }
 }

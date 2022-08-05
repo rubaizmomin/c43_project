@@ -26,7 +26,7 @@ public class Register extends Endpoint{
         String password = null;
         String occupation = null;
         String address = null;
-        Long sin = null;
+        String sin = null;
         String dob = null;
         if (!deserialized.has("name") || !deserialized.has("email") || !deserialized.has("password") || !deserialized.has("occupation")|| !deserialized.has("address") || !deserialized.has("sin") || !deserialized.has("dob")) {
             this.sendStatus(r, 400);
@@ -93,11 +93,12 @@ public class Register extends Endpoint{
             occupation = deserialized.getString("occupation");
         }
         if (deserialized.has("sin")) {
-            if (deserialized.get("sin").getClass() != Long.class) {
+            if (deserialized.get("sin").getClass() != String.class) {
+                System.out.println("Not long");
                 this.sendStatus(r, 400);
                 return;
             }
-            sin = deserialized.getLong("sin");
+            sin = deserialized.getString("sin");
         }
         // if all the variables are still null then there's no variables in request so retrun 400:
         if (name == null && email == null && password == null && address == null && occupation == null && sin == null && dob == null) {

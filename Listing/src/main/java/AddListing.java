@@ -19,10 +19,10 @@ public class AddListing extends Endpoint{
         String country = null;
         String lat = null;
         String lon = null;
-        String u_id = null;
+        Integer u_id = null;
         String email = null;
         if (!deserialized.has("u_id")|| !deserialized.has("listing_type") || !deserialized.has("postal_code")|| !deserialized.has("home_address") || !deserialized.has("city")|| !deserialized.has("country")|| !deserialized.has("latitude") || !deserialized.has("longitude")) {
-
+            System.out.println("Not all params");
             this.sendStatus(r, 400);
             return;
 
@@ -32,10 +32,18 @@ public class AddListing extends Endpoint{
                 this.sendStatus(r, 400);
                 return;
             }
-            u_id = deserialized.getString("u_id");
+            try{
+                u_id = Integer.parseInt(deserialized.getString("u_id"));
+            }catch (Exception e){
+                System.out.println("Cannot parse u_id. not a string");
+                this.sendStatus(r, 400);
+                return;
+            }
+
         }
         if (deserialized.has("listing_type")) {
             if (deserialized.get("listing_type").getClass() != String.class) {
+                System.out.println("listing_type");
                 this.sendStatus(r, 400);
                 return;
             }
@@ -106,6 +114,18 @@ public class AddListing extends Endpoint{
         }
         Boolean resulthasnext = false;
         try{
+            ResultSet rs6 = this.dao.getUserfromUid(u_id);
+            if(!rs6.next()){
+                this.sendStatus(r, 400);
+                System.out.println("The user is not in the database");
+                return;
+            }
+        }catch (Exception e){
+            System.out.println("Cant check uid");
+            this.sendStatus(r, 500);
+            return;
+        }
+        try{
             ResultSet rs1 = this.dao.getDataThroughAddress(home_address);
             resulthasnext = rs1.next();
         }catch (Exception e)
@@ -133,7 +153,7 @@ public class AddListing extends Endpoint{
             String uri = "/host/register";
             String url = "http://localhost:8003";
             JSONObject hostjson = new JSONObject();
-            ResultSet emaildata = this.dao.getEmailfromUid(Integer.parseInt(u_id));
+            ResultSet emaildata = this.dao.getEmailfromUid(u_id);
             if(emaildata.next()) {
                 email = emaildata.getString("email");
                 hostjson.put("email", email);

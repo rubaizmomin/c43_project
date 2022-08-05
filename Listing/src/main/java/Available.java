@@ -1,11 +1,17 @@
 import com.sun.net.httpserver.HttpExchange;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
+import static com.mysql.cj.MysqlType.JSON;
+
 
 public class Available extends Endpoint{
 
@@ -26,37 +32,44 @@ public class Available extends Endpoint{
         Integer l_id = Integer.parseInt(uriPartsP3queryStr[1]);
         String body = Utils.convert(r.getRequestBody());
         JSONObject deserialized = new JSONObject(body);
-        String date = null;
+        JSONArray jarr = null;
+        ArrayList<String> datearray = new ArrayList<>();
         String price = null;
         String home_address = null;
         LocalDate availdate = null;
         Double rental_price = null;
-        if(!deserialized.has("date") && !deserialized.has("rental_price")){
+        if(!deserialized.has("available_date") && !deserialized.has("rental_price")){
             this.sendStatus(r, 400);
             return;
         }
         if (deserialized.has("available_date")) {
-            if (deserialized.get("available_date").getClass() != String.class) {
+            System.out.println(deserialized.get("available_date").getClass());
+            if (deserialized.get("available_date").getClass() != JSONArray.class) {
+                System.out.println("Not the correct type");
                 this.sendStatus(r, 400);
                 return;
             }
-            date = deserialized.getString("available_date");
+            jarr = deserialized.getJSONArray("available_date");
+            for(int i = 0; i<jarr.length(); i++){
+                datearray.add(jarr.get(i).toString());
+            }
             //"day/month/year"
-            String[] splitdate = date.split("/");
-            LocalDate today = null;
-            try {
-                availdate = LocalDate.of(Integer.parseInt(splitdate[2]), Integer.parseInt(splitdate[1]), Integer.parseInt(splitdate[0]));
-                System.out.println(availdate);
-                today = LocalDate.now();
-                if(availdate.isBefore(today)){
-                    System.out.println("Available date is before today");
+            for(int i = 0; i < datearray.size(); i++) {
+                String[] splitdate = datearray.get(i).split("/");
+                LocalDate today = null;
+                try {
+                    availdate = LocalDate.of(Integer.parseInt(splitdate[0]), Integer.parseInt(splitdate[1]), Integer.parseInt(splitdate[2]));
+                    today = LocalDate.now();
+                    if (availdate.isBefore(today)) {
+                        System.out.println("Available date is before today");
+                        this.sendStatus(r, 400);
+                        return;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                     this.sendStatus(r, 400);
                     return;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                this.sendStatus(r, 400);
-                return;
             }
         }
         if (deserialized.has("rental_price")) {
@@ -112,37 +125,40 @@ public class Available extends Endpoint{
             System.out.println("Issue with getDataThroughLid");
             return;
         }
-        try{
-            System.out.println(date);
-            ResultSet rs3 = this.dao.CheckDate(date);
-            if(!rs3.next()) {
-                this.dao.AddDatetoCalendar(date);
-            }
-        } catch(Exception e){
-            System.out.println("Issue with date");
-            this.sendStatus(r, 500);
-            return;
-        }
-        try{
-            ResultSet rs5 = this.dao.CheckAvailability(home_address, date);
-            if(rs5.next()){
-                System.out.println("Listing already has the available date. pls patch if you want to change the price");
-                this.sendStatus(r, 409);
+        for(int i = 0; i < datearray.size(); i++) {
+            System.out.println(datearray.get(i));
+            try {
+                ResultSet rs3 = this.dao.CheckDate(datearray.get(i));
+                if (!rs3.next()) {
+                    System.out.println("I am here so if you get issue with date, it is with addDatetoCalendar");
+                    this.dao.AddDatetoCalendar(datearray.get(i));
+                }
+            } catch (Exception e) {
+                System.out.println("Issue with date");
+                this.sendStatus(r, 500);
                 return;
             }
-        } catch(Exception e){
-            System.out.println("Error with checking available date");
-            this.sendStatus(r, 500);
-            return;
+            try {
+                ResultSet rs5 = this.dao.CheckAvailability(home_address, datearray.get(i));
+                if (rs5.next()) {
+                    System.out.println("Listing already has the available date. pls patch if you want to change the price");
+                    System.out.println("This date will not be added");
+                    continue;
+                }
+            } catch (Exception e) {
+                System.out.println("Error with checking available date");
+                this.sendStatus(r, 500);
+                return;
+            }
+            try{
+                this.dao.AddAvailability(home_address, datearray.get(i), rental_price);
+            }catch (Exception e){
+                this.sendStatus(r, 500);
+                System.out.println("Something wrong with adding availability.[BOTTOM OF AVAILABLE] HERE");
+                return;
+            }
         }
-        try{
-            this.dao.AddAvailability(home_address, date, rental_price);
-            this.sendStatus(r, 200);
-            return;
-        }catch (Exception e){
-            this.sendStatus(r, 500);
-            System.out.println("Something wrong with adding availability.[BOTTOM OF AVAILABLE] HERE");
-            return;
-        }
+        this.sendStatus(r, 200);
+        return;
     }
 }

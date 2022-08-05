@@ -1,5 +1,3 @@
-import io.github.cdimascio.dotenv.Dotenv;
-
 import java.sql.*;
 
 public class mysqlDAO {
@@ -41,8 +39,8 @@ public class mysqlDAO {
         return this.st.executeQuery(query);
     }
 
-    public void addUser(String name, String email, String password, String address, String occupation, Long sin, String dob) throws SQLException {
-        String query = "INSERT INTO Users (name, email, password, address, occupation, sin, dob) VALUES ('%s', '%s','%s', '%s', '%s', %d, '%s')";
+    public void addUser(String name, String email, String password, String address, String occupation, String sin, String dob) throws SQLException {
+        String query = "INSERT INTO Users (name, email, password, address, occupation, sin, dob) VALUES ('%s', '%s','%s', '%s', '%s', '%s', '%s')";
         query = String.format(query, name, email, password, address, occupation, sin, dob);
         this.st.execute(query);
     }
