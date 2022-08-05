@@ -46,7 +46,7 @@ CREATE TABLE Amenity (
 
 CREATE TABLE available (
     home_address varchar(30) NOT NULL,
-    available_date char(10) NOT NULL,
+    available_date date NOT NULL,
     rental_price double NOT NULL,
     PRIMARY KEY (home_address, available_date),
     FOREIGN KEY (home_address) REFERENCES Listing (home_address),
