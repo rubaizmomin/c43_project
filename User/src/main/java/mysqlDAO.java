@@ -23,7 +23,7 @@ public class mysqlDAO {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
     }
-    public ResultSet getUserfromUid(String email) throws SQLException {
+    public ResultSet getUserfromEmail(String email) throws SQLException {
         String query = "SELECT * FROM Users WHERE email = '%s'";
         query = String.format(query, email);
         return this.st.executeQuery(query);
@@ -39,8 +39,8 @@ public class mysqlDAO {
         return this.st.executeQuery(query);
     }
 
-    public void addUser(String name, String email, String password, String address, String occupation, Integer sin, String dob) throws SQLException {
-        String query = "INSERT INTO users (name, email, password, address, occupation, sin, dob) VALUES ('%s', '%s','%s', '%s', '%s', %d, '%s')";
+    public void addUser(String name, String email, String password, String address, String occupation, String sin, String dob) throws SQLException {
+        String query = "INSERT INTO users (name, email, password, address, occupation, sin, dob) VALUES ('%s', '%s','%s', '%s', '%s', %s, '%s')";
         query = String.format(query, name, email, password, address, occupation, sin, dob);
         this.st.execute(query);
     }

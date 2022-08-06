@@ -10,7 +10,7 @@ CREATE TABLE Users (
     address varchar(30) NOT NULL,
     dob char(10) NOT NULL,
     occupation varchar(30) NOT NULL,
-    sin BIGINT NOT NULL UNIQUE
+    sin char(10) NOT NULL UNIQUE
 );
 
 CREATE TABLE Renter (
