@@ -36,6 +36,7 @@ public abstract class Endpoint implements HttpHandler {
                     this.handleGet(r);
                     break;
                 case "PATCH":
+                    System.out.println("PATCH REQUEST");
                     this.handlePatch(r);
                     break;
                 case "POST":
