@@ -45,6 +45,12 @@ public class mysqlDAO {
         return this.st.executeQuery(query);
     }
 
+    public ResultSet checkSin(String sin) throws SQLException {
+        String query = "SELECT * FROM users WHERE sin = '%s'";
+        query = String.format(query, sin);
+        return this.st.executeQuery(query);
+    }
+
     public void addUser(String name, String email, String password, String address, String occupation, String sin, String dob) throws SQLException {
         String query = "INSERT INTO users (name, email, password, address, occupation, sin, dob) VALUES ('%s', '%s','%s', '%s', '%s', %s, '%s')";
         query = String.format(query, name, email, password, address, occupation, sin, dob);

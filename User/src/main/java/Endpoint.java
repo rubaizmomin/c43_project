@@ -101,7 +101,7 @@ public abstract class Endpoint implements HttpHandler {
 
     public void handleGet(HttpExchange r) throws IOException, JSONException {};
 
-    public void handlePatch(HttpExchange r) throws IOException, JSONException {};
+    public void handlePatch(HttpExchange r) throws IOException, JSONException, SQLException {};
 
     public void handlePost(HttpExchange r) throws IOException, JSONException, SQLException {};
 

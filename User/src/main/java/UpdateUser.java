@@ -16,7 +16,7 @@ public class UpdateUser extends Endpoint {
      * Update a user information using the given information.
      */
     @Override
-    public void handlePatch(HttpExchange r) throws IOException, JSONException {
+    public void handlePatch(HttpExchange r) throws IOException, JSONException, SQLException {
         // Check params
         String[] params = r.getRequestURI().toString().split("/");
         if (params.length != 4 || params[3].isEmpty()) {
@@ -70,7 +70,17 @@ public class UpdateUser extends Endpoint {
                 this.sendStatus(r, 400);
                 return;
             }
-            email = deserialized.getString("email");
+            String newEmail = deserialized.getString("email");
+            if (!email.equals(newEmail)) {
+                // Check if email is unique
+                ResultSet rs = this.dao.checkEmail(newEmail);
+                // If email is already in database, send 409
+                if (rs.next()) {
+                    this.sendStatus(r, 409);
+                    return;
+                }
+                email = newEmail;
+            }
         }
         if (deserialized.has("password")) {
             if (deserialized.get("password").getClass() != String.class) {
@@ -123,7 +133,17 @@ public class UpdateUser extends Endpoint {
                 this.sendStatus(r, 400);
                 return;
             }
-            sin = deserialized.getString("sin");
+            String newSin = deserialized.getString("sin");
+            if (!sin.equals(newSin)) {
+                // Check if sin number is unique
+                ResultSet rs = this.dao.checkSin(newSin);
+                // If sin number is already in database, send 409
+                if (rs.next()) {
+                    this.sendStatus(r, 409);
+                    return;
+                }
+                sin = newSin;
+            }
         }
 
         // Update user information
