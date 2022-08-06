@@ -161,4 +161,60 @@ public class Available extends Endpoint{
         this.sendStatus(r, 200);
         return;
     }
+
+    /**
+     * GET /listing/addavailable/:u_id
+     * @param u_id
+     * @return 200, 400, 404, 500
+     * GEt all listings owned by uid
+     */
+    @Override
+    public void handleGet(HttpExchange r) throws IOException, JSONException {
+        String uri = r.getRequestURI().toString();
+        String[] splitUrl = uri.split("/");
+        Integer u_id = null;
+        try{
+            u_id = Integer.parseInt(splitUrl[3]);
+        } catch (Exception e){
+            System.out.println("Cannot parse the uid in addavailable/uid");
+            this.sendStatus(r, 500);
+            return;
+        }
+        String email = null;
+        try{
+            ResultSet rs = this.dao.getUserfromUid(u_id);
+            if(!rs.next()){
+                this.sendStatus(r, 400);
+                System.out.println("Cannot get User from the mentioned Uid");
+                return;
+            }
+            email = rs.getString("email");
+        } catch (SQLException e) {
+            this.sendStatus(r, 500);
+            System.out.println("Issue with GetUserfromUid in GET addavailable/:uid");
+        }
+        try{
+            ResultSet rs1 = this.dao.getListingfromEmail(email);
+            //{data : [{home_address: String, l_id: Integer, listing_type: String, postal_code: String, city: String, country: String}, ...]}
+            ArrayList<JSONObject> listingarr = new ArrayList<>();
+            while(rs1.next()){
+                JSONObject listing = new JSONObject();
+                listing.put("home_address", rs1.getString("home_address"));
+                listing.put("l_id", rs1.getString("l_id"));
+                listing.put("listing_type", rs1.getString("listing_type"));
+                listing.put("postal_code", rs1.getString("postal_code"));
+                listing.put("city", rs1.getString("city"));
+                listing.put("country", rs1.getString("country"));
+                listingarr.add(listing);
+            }
+            JSONObject data = new JSONObject();
+            data.put("data", listingarr);
+            this.sendResponse(r, data, 200);
+            return;
+        }catch (Exception e){
+            this.sendStatus(r, 500);
+            System.out.println("Error in getListingfromEmail and parsing");
+            return;
+        }
+    }
 }

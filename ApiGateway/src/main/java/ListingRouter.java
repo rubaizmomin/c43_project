@@ -68,6 +68,37 @@ public class ListingRouter extends RequestRouter{
                 }
             }
         }
-
+    }
+    @Override
+    public void handleGet(HttpExchange r) throws JSONException, IOException, InterruptedException {
+        String uri = r.getRequestURI().toString();
+        String[] splitUrl = uri.split("/");
+        if(splitUrl.length != 4){
+            this.sendStatus(r, 400);
+            System.out.println("Check url for addavailable GET");
+            return;
+        }
+        String actionString = splitUrl[2];
+        switch (actionString) {
+            case "addavailable":
+                try{
+                    Integer u_id = Integer.parseInt(splitUrl[3]);
+                } catch (Exception e){
+                    System.out.println("Cannot parse the uid in addavailable/uid");
+                    this.sendStatus(r, 500);
+                    return;
+                }
+                String bodyStr = Utils.convert(r.getRequestBody());
+                JSONObject bodyJson = new JSONObject(bodyStr);
+                String bodyJsonStr = bodyJson.toString();
+                System.out.println(bodyJsonStr);
+                HttpResponse<String> s = this.sendRequestPost(r.getRequestMethod(), url, r.getRequestURI().toString(), bodyJsonStr);
+                System.out.println(s.body());
+                this.sendResponse(r, new JSONObject(s.body()), s.statusCode());
+                return;
+            default:
+                this.sendStatus(r, 400);
+                break;
+        }
     }
 }

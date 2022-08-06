@@ -87,5 +87,11 @@ public class mysqlDAO {
         System.out.println(query);
         this.st.execute(query);
     }
+
+    public ResultSet getListingfromEmail(String email) throws SQLException {
+        String query = "SELECT * FROM owns NATURAL JOIN listing WHERE email = '%s'";
+        query = String.format(query, email);
+        return this.st.executeQuery(query);
+    }
 }
 

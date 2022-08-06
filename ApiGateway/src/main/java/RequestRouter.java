@@ -122,7 +122,7 @@ public class RequestRouter implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-    public void handleGet(HttpExchange r) {};
+    public void handleGet(HttpExchange r) throws JSONException, IOException, InterruptedException {};
     public void handlePatch(HttpExchange r) {};
     public void handlePost(HttpExchange r) throws JSONException, IOException, InterruptedException {};
     public void handlePut(HttpExchange r) {};
