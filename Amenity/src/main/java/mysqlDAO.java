@@ -35,4 +35,15 @@ public class mysqlDAO {
         query = String.format(query, amenity_type);
         this.st.execute(query);
     }
+    public ResultSet getAmenityID(String amenity_type) throws SQLException {
+        String query = "SELECT * FROM amenity WHERE amenity_type = '%s'";
+        query = String.format(query, amenity_type);
+        return this.st.executeQuery(query);
+    }
+    public void addAmenitytoListing(String home_address, Integer a_id) throws SQLException {
+        String query = "INSERT INTO has (home_address, a_id) VALUES ('%s', %d)";
+        query = String.format(query, home_address, a_id);
+        this.st.execute(query);
+        return;
+    }
 }

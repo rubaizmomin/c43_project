@@ -16,7 +16,6 @@ public class AddAmenity extends Endpoint {
         String body = Utils.convert(r.getRequestBody());
         JSONObject deserialized = new JSONObject(body);
         String amenity_type = null;
-
         if (!deserialized.has("amenity_type")) {
             this.sendStatus(r, 400);
             return;
@@ -27,16 +26,19 @@ public class AddAmenity extends Endpoint {
                 return;
             }
             amenity_type = deserialized.getString("amenity_type");
-        }
-        // if all the variables are still null then there's no variables in request so retrun 400:
-        if (amenity_type == null) {
-            this.sendStatus(r, 400);
-            return;
+            System.out.println("I am here and I am getting this" + amenity_type);
+            if(!amenity_type.equals("Wifi") && !amenity_type.equals("Kitchen") && !amenity_type.equals("Washer") && !amenity_type.equals("Dryer") && !amenity_type.equals("Air conditioning"))
+            {
+                this.sendStatus(r, 400);
+                System.out.println("Wrong Amenity");
+                return;
+            }
         }
         //check if there is already an email in the database
         ResultSet rs1;
         boolean resultHasNext;
         try {
+            System.out.println("Checking amenity type");
             rs1 = this.dao.checkAmenityType(amenity_type);
             resultHasNext = rs1.next();
         } catch (SQLException e) {
@@ -46,17 +48,19 @@ public class AddAmenity extends Endpoint {
         }
         // checks if there is any user with that email. if yes, conflict error.
         if (resultHasNext) {
-            this.sendStatus(r, 409);
+            this.sendStatus(r, 200);
+            System.out.println("Amenity Already Added");
             return;
         }
         try {
+            System.out.println("New Amenity added" + amenity_type);
             this.dao.addAmenity(amenity_type);
+            this.sendStatus(r, 200);
+            return;
         } catch (SQLException e) {
             e.printStackTrace();
             this.sendStatus(r, 500);
             return;
         }
-        this.sendStatus(r, 200);
-        return;
     }
 }

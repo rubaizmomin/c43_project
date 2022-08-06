@@ -1,4 +1,5 @@
 import com.sun.net.httpserver.HttpExchange;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -6,6 +7,7 @@ import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class AddListing extends Endpoint{
     @Override
@@ -21,11 +23,25 @@ public class AddListing extends Endpoint{
         String lon = null;
         Integer u_id = null;
         String email = null;
-        if (!deserialized.has("u_id")|| !deserialized.has("listing_type") || !deserialized.has("postal_code")|| !deserialized.has("home_address") || !deserialized.has("city")|| !deserialized.has("country")|| !deserialized.has("latitude") || !deserialized.has("longitude")) {
+        JSONArray jarr;
+        ArrayList<String> amenities = new ArrayList<>();
+        if (!deserialized.has("u_id")|| !deserialized.has("listing_type") || !deserialized.has("postal_code")|| !deserialized.has("home_address") || !deserialized.has("city")|| !deserialized.has("country")|| !deserialized.has("latitude") || !deserialized.has("longitude") || !deserialized.has("amenity")) {
             System.out.println("Not all params");
             this.sendStatus(r, 400);
             return;
 
+        }
+        if (deserialized.has("amenity")) {
+            if (deserialized.get("amenity").getClass() != JSONArray.class) {
+                System.out.println("Not the correct type");
+                this.sendStatus(r, 400);
+                return;
+            }
+            jarr = deserialized.getJSONArray("amenity");
+            for(int i = 0; i<jarr.length(); i++){
+                amenities.add(jarr.get(i).toString());
+                System.out.println(amenities.get(i));
+            }
         }
         if (deserialized.has("u_id")) {
             if (deserialized.get("u_id").getClass() != String.class) {
@@ -139,7 +155,6 @@ public class AddListing extends Endpoint{
             System.out.println("Address exists");
             return;
         }
-        System.out.println("I am here too in addListing");
         try{
 
             this.dao.addlisting(listing_type, postal_code, home_address, city, country, lati, longi);
@@ -148,7 +163,6 @@ public class AddListing extends Endpoint{
             System.out.println("error in addListing");
             return;
         }
-
         try{
             String uri = "/host/register";
             String url = "http://localhost:8003";
@@ -174,6 +188,27 @@ public class AddListing extends Endpoint{
             System.out.println("error in addlistingtoOwns");
             return;
         }
+        System.out.println("Added listing to listing, owns and hosts");
+        try{
+            String uri = "/amenity/addamenitytolisting";
+            String location_url = "http://localhost:8004";
+            JSONObject json = new JSONObject();
+            json.put("home_address", home_address);
+            json.put("amenity", amenities);
+            System.out.println(json);
+            HttpResponse<String> s2 = this.sendRequest("POST", location_url, uri, json.toString());
+            System.out.println("I am HEREEEEEEEE");
+            if(s2.statusCode() != 200){
+                this.sendStatus(r, s2.statusCode());
+                System.out.println("This error was returned by Amenities");
+                return;
+            }
+        } catch (Exception e){
+            this.sendStatus(r, 500);
+            System.out.println("error in adding amenities");
+            return;
+        }
         this.sendStatus(r, 200);
+        return;
     }
 }

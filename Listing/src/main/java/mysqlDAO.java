@@ -57,6 +57,7 @@ public class mysqlDAO {
         query = String.format(query, home_address);
         return this.st.executeQuery(query);
     }
+
     public ResultSet getDataThroughLid(Integer l_id) throws SQLException {
         String query = "SELECT * FROM Listing WHERE l_id = %d";
         query = String.format(query, l_id);

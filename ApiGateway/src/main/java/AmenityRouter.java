@@ -17,8 +17,9 @@ public class AmenityRouter extends RequestRouter {
         }
         String actionString = splitUrl[2];
         switch (actionString){
+            case "addamenitytolisting":
             case "add":
-                System.out.println("3");
+                System.out.println("PRINT ME" + actionString);
                 String bodyStr = Utils.convert(r.getRequestBody());
                 JSONObject bodyJson = new JSONObject(bodyStr);
                 String bodyJsonStr = bodyJson.toString();

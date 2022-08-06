@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static com.mysql.cj.MysqlType.JSON;
 
 
 public class Available extends Endpoint{
@@ -125,6 +124,20 @@ public class Available extends Endpoint{
             System.out.println("Issue with getDataThroughLid");
             return;
         }
+        for(int i = 0; i <datearray.size(); i++) {
+            try {
+                ResultSet rs5 = this.dao.CheckAvailability(home_address, datearray.get(i));
+                if (rs5.next()) {
+                    this.sendStatus(r, 409);
+                    System.out.println("Please select a date which is not already available. To change available date price, patch");
+                    return;
+                }
+            } catch (Exception e) {
+                System.out.println("Error with checking available date");
+                this.sendStatus(r, 500);
+                return;
+            }
+        }
         for(int i = 0; i < datearray.size(); i++) {
             System.out.println(datearray.get(i));
             try {
@@ -135,18 +148,6 @@ public class Available extends Endpoint{
                 }
             } catch (Exception e) {
                 System.out.println("Issue with date");
-                this.sendStatus(r, 500);
-                return;
-            }
-            try {
-                ResultSet rs5 = this.dao.CheckAvailability(home_address, datearray.get(i));
-                if (rs5.next()) {
-                    System.out.println("Listing already has the available date. pls patch if you want to change the price");
-                    System.out.println("This date will not be added");
-                    continue;
-                }
-            } catch (Exception e) {
-                System.out.println("Error with checking available date");
                 this.sendStatus(r, 500);
                 return;
             }
@@ -195,12 +196,20 @@ public class Available extends Endpoint{
         }
         try{
             ResultSet rs1 = this.dao.getListingfromEmail(email);
-            //{data : [{home_address: String, l_id: Integer, listing_type: String, postal_code: String, city: String, country: String}, ...]}
+            //{data : [{
+            //          home_address: String,
+            //          l_id: Integer,
+            //          listing_type: String,
+            //          postal_code: String,
+            //          city: String,
+            //          country: String
+            //          },
+            //          ...]}
             ArrayList<JSONObject> listingarr = new ArrayList<>();
             while(rs1.next()){
                 JSONObject listing = new JSONObject();
                 listing.put("home_address", rs1.getString("home_address"));
-                listing.put("l_id", rs1.getString("l_id"));
+                listing.put("l_id", rs1.getInt("l_id"));
                 listing.put("listing_type", rs1.getString("listing_type"));
                 listing.put("postal_code", rs1.getString("postal_code"));
                 listing.put("city", rs1.getString("city"));

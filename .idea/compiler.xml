@@ -10,15 +10,9 @@
         <module name="amenitymicroservice" />
         <module name="Listing" />
         <module name="ApiGateway" />
+        <module name="Renter" />
         <module name="usermicroservice" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="amenitymicroservice" target="16" />
-      <module name="ApiGateway" target="16" />
-      <module name="Host" target="16" />
-      <module name="Listing" target="16" />
-      <module name="usermicroservice" target="16" />
-    </bytecodeTargetLevel>
   </component>
 </project>

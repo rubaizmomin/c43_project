@@ -66,14 +66,6 @@ public abstract class Endpoint implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-
-    public void sendResponse(HttpExchange r, JSONObject obj, int statusCode) throws JSONException, IOException {
-        obj.put("status", errorMap.get(statusCode));
-        String response = obj.toString();
-        r.sendResponseHeaders(statusCode, response.length());
-        this.writeOutputStream(r, response);
-    }
-
     public HttpResponse<String> sendRequest(String method, String url, String uri, String body) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest req = HttpRequest.newBuilder()
@@ -82,6 +74,14 @@ public abstract class Endpoint implements HttpHandler {
                 .build();
         return client.send(req, HttpResponse.BodyHandlers.ofString());
     }
+
+    public void sendResponse(HttpExchange r, JSONObject obj, int statusCode) throws JSONException, IOException {
+        obj.put("status", errorMap.get(statusCode));
+        String response = obj.toString();
+        r.sendResponseHeaders(statusCode, response.length());
+        this.writeOutputStream(r, response);
+    }
+
     public void sendStatus(HttpExchange r, int statusCode) throws JSONException, IOException {
         JSONObject res = new JSONObject();
         res.put("status", errorMap.get(statusCode));
@@ -114,7 +114,7 @@ public abstract class Endpoint implements HttpHandler {
 
     public void handlePatch(HttpExchange r) throws IOException, JSONException {};
 
-    public void handlePost(HttpExchange r) throws IOException, JSONException, SQLException, InterruptedException {};
+    public void handlePost(HttpExchange r) throws IOException, JSONException, SQLException {};
 
     public void handlePut(HttpExchange r) throws IOException, JSONException {};
 
