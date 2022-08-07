@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // Style
 import './ListingPage.css';
+import { useNavigate } from 'react-router-dom';
 
 // Checks if value is floating point
 const checkFloat = (value) => {
@@ -23,6 +24,8 @@ const checkDateRange = (lowDate, upDate) => {
 }
 
 function SearchPage() {
+    const navigate = useNavigate();
+
     const [ListingList, setListingList] = useState([]);
     // Filters
     const [Filter, setFilter] = useState("?costorder=asc");
@@ -41,23 +44,28 @@ function SearchPage() {
     const [CostOrder, setCostOrder] = useState("asc"); // If true, asc, false, desc
 
     useEffect(() => {
-        // Get all available listings by filters
-        axios.get(`http://localhost:8000/search/listing${Filter}`)
-            .then(response => {
-                setListingList(response.data.data);
-            });
-    }, [Filter]);
-
-    useEffect(() => {
         axios.get("http://localhost:8000/amenity/getAllAmenities")
             .then(response => {
                 if (response.data.status === "OK") {
+                    console.log(response.data.data);
                     setAmenityList(response.data.data);
                 } else {
                     console.log("Failed to load amenities");
                 }
             });
     }, []);
+
+    useEffect(() => {
+        // Get all available listings by filters
+        console.log(`http://localhost:8000/search/listing${Filter}`);
+        axios.get(`http://localhost:8000/search/listing${Filter}`)
+            .then(response => {
+                console.log("Filter");
+                setListingList(response.data.data);
+            }).catch(err => {
+                console.log(err);
+            });
+    }, [Filter]);
 
     // Home Address
     const onSearchText = (event) => {
@@ -214,16 +222,38 @@ function SearchPage() {
         setFilter(filter);
     };
 
+    const onView = (l_id) => {
+        navigate(`/mybnb/search/${l_id}`);
+    };
+
+    const listingListTitle = () => {
+        return (
+            <div className="search-header">
+                <p className="table small">Listing Id</p>
+                <p className="table medium">Listing Type</p>
+                <p className="table large">Home Address</p>
+                <p className="table medium">Postal Code</p>
+                <p className="table medium">City</p>
+                <p className="table medium">Country</p>
+                <div className="table small">View</div>
+            </div>
+        );
+    };
+
     const listingList = ListingList && ListingList.length > 0 
         ? ListingList.map((listing, index) => {
+            console.log(listing);
             return (
                 <div key={index} className="search-listing-info">
-                    {listing.l_id}
-                    {listing.listing_type}
-                    {listing.home_address}
-                    {listing.postal_code}
-                    {listing.city}
-                    {listing.country}
+                    <p className="table small">{listing.l_id}</p>
+                    <p className="table medium">{listing.listing_type}</p>
+                    <p className="table large">{listing.home_address}</p>
+                    <p className="table medium">{listing.postal_code}</p>
+                    <p className="table medium">{listing.city}</p>
+                    <p className="table medium">{listing.country}</p>
+                    <div className="table small">
+                        <button onClick={() => onView(listing.l_id)}>View</button>
+                    </div>
                 </div>
             );
         }) : <div>No available list</div>;
@@ -277,6 +307,7 @@ function SearchPage() {
             </div>
             <div className="search-listings">
                 <h3>Available Listings</h3>
+                {listingListTitle()}
                 <div className="search-body">{listingList}</div>
             </div>
         </div>
