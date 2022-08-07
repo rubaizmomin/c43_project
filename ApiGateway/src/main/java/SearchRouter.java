@@ -31,8 +31,7 @@ public class SearchRouter extends RequestRouter{
                 switch (actionString[2]) {
                     // 8000/rentavailable/:l_id
                     case "listing":
-                        String bodyStr = Utils.convert(r.getRequestBody());
-                        JSONObject bodyJson = new JSONObject(bodyStr);
+                        JSONObject bodyJson = new JSONObject();
                         String bodyJsonStr = bodyJson.toString();
                         System.out.println(bodyJsonStr);
                         HttpResponse<String> s = this.sendRequestPost(r.getRequestMethod(), url, r.getRequestURI().toString(), bodyJsonStr);

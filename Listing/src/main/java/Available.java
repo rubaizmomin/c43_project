@@ -52,9 +52,9 @@ public class Available extends Endpoint{
             for(int i = 0; i<jarr.length(); i++){
                 datearray.add(jarr.get(i).toString());
             }
-            //"day/month/year"
+            //"year-month-date"
             for(int i = 0; i < datearray.size(); i++) {
-                String[] splitdate = datearray.get(i).split("/");
+                String[] splitdate = datearray.get(i).split("-");
                 LocalDate today = null;
                 try {
                     availdate = LocalDate.of(Integer.parseInt(splitdate[0]), Integer.parseInt(splitdate[1]), Integer.parseInt(splitdate[2]));

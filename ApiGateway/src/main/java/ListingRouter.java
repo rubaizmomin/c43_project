@@ -19,7 +19,7 @@ public class ListingRouter extends RequestRouter{
         if(splitUrl.length == 3) {
             String actionString = splitUrl[2];
             switch (actionString) {
-                case "add":
+                case "addlisting":
                     System.out.println("3");
                     String bodyStr = Utils.convert(r.getRequestBody());
                     JSONObject bodyJson = new JSONObject(bodyStr);
@@ -88,8 +88,7 @@ public class ListingRouter extends RequestRouter{
                     this.sendStatus(r, 500);
                     return;
                 }
-                String bodyStr = Utils.convert(r.getRequestBody());
-                JSONObject bodyJson = new JSONObject(bodyStr);
+                JSONObject bodyJson = new JSONObject();
                 String bodyJsonStr = bodyJson.toString();
                 System.out.println(bodyJsonStr);
                 HttpResponse<String> s = this.sendRequestPost(r.getRequestMethod(), url, r.getRequestURI().toString(), bodyJsonStr);
