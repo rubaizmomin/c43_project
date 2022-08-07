@@ -27,15 +27,15 @@ function AddListingPage() {
     const [Amenity, setAmenity] = useState([]);
 
     useEffect(() => {
-        setAmenityList(sampleAmenity);
-        // axios.get("http://localhost:8000/amenity/getAllAmenities")
-        //     .then(response => {
-        //         if (response.data.status === "OK") {
-        //             setAmenityList(response.data.data);
-        //         } else {
-        //             console.log("Failed to load amenities");
-        //         }
-        //     });
+        axios.get("http://localhost:8000/amenity/getAllAmenities")
+            .then(response => {
+                if (response.data.status === "OK") {
+                    console.log(response.data);
+                    setAmenityList(response.data.data);
+                } else {
+                    console.log("Failed to load amenities");
+                }
+            });
     }, []);
     
 
