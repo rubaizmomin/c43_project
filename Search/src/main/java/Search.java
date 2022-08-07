@@ -39,12 +39,13 @@ public class Search extends Endpoint{
                     }
                 }
             }
-            if(queries[i].contains("amenities")){
+            if(queries[i].contains("amenities")) {
                 ArrayList<Integer> alist = new ArrayList<>();
-                String [] amenities_query = queries[i].split("=");
+                String[] amenities_query = queries[i].split("=");
                 String amenities = amenities_query[1];
-                String [] each_amenity = amenities.split("&");
-                for(int j = 0; j < each_amenity.length; j++){
+                String[] each_amenity = amenities.split("&");
+
+                for (int j = 0; j < each_amenity.length; j++) {
                     String encoded_amenity = each_amenity[j];
                     String decoded_amenity = null;
                     try {
@@ -56,31 +57,93 @@ public class Search extends Endpoint{
                     }
                     Integer a_id = null;
                     try {
-                        System.out.println(decoded_amenity);
                         ResultSet rs2 = this.dao.getAmenityID(decoded_amenity);
-                        if(rs2.next()) {
+                        if (rs2.next()) {
                             a_id = rs2.getInt("a_id");
                             alist.add(a_id);
                             anum++;
-                        }
-                        else{
+                        } else {
                             this.sendStatus(r, 404);
                             System.out.println("the filtered amenity does not exists");
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         this.sendStatus(r, 500);
                         System.out.println("The filtered amenity does not exists");
                         return;
                     }
                 }
-                for(int k = 0; k < alist.size(); k++) {
-                    if (query.isEmpty()) {
-                        query = query.concat("a_id = " + alist.get(k).toString() + " ");
-                    } else if(query.contains("a_id")) {
-                        query = query.concat(" OR a_id = " + alist.get(k).toString() + " ");
-                    } else {
-                        query = query.concat(" AND a_id = " + alist.get(k).toString() + " ");
+//                for(int k = 0; k < alist.size(); k++) {
+//                    if (query.isEmpty()) {
+//                        query = query.concat("a_id = " + alist.get(k).toString() + " ");
+//                    } else if(query.contains("a_id")) {
+//                        query = query.concat(" OR a_id = " + alist.get(k).toString() + " ");
+//                    } else {
+//                        query = query.concat(" AND a_id = " + alist.get(k).toString() + " ");
+//                    }
+//                }
+                if (query.isEmpty()) {
+                    query = query.concat(" a_id IN (");
+                } else {
+                    query = query.concat(" AND a_id IN (");
+                }
+                for (int k = 0; k < alist.size() - 1; k++) {
+                    query = query.concat(alist.get(k).toString() + ",");
+                }
+                query = query.concat(alist.get(alist.size() - 1).toString() + ") ");
+
+            }
+                //Amenity: and a_id IN (7, 10) group by home_address HAVING COUNT(distinct a_id) = 2
+            if(queries[i].contains("price")){
+                String[] price_query = queries[i].split("\\$");
+                String min_max_maybe = price_query[1];
+                String [] min_max_check = min_max_maybe.split("&");
+                if(min_max_check.length == 2){
+                    String min_price_string = min_max_check[0];
+                    String max_price_string = min_max_check[1];
+                    Float min_price = Float.parseFloat(min_price_string.split("=")[1]);
+                    Float max_price = Float.parseFloat(max_price_string.split("=")[1]);
+                    if(query.isEmpty()){
+                        query = query.concat(" rental_price >= " + min_price + " and rental_price <= " + max_price + " ");
                     }
+                    else {
+                        query = query.concat(" AND rental_price >= " + min_price + " and rental_price <= " + max_price + " ");
+                    }
+                }
+                if(min_max_check.length == 1){
+                    if(min_max_check[0].contains("min_price")){
+                        String min_price_string = min_max_check[0];
+                        Float min_price = Float.parseFloat(min_price_string.split("=")[1]);
+                        if(query.isEmpty()){
+                            query = query.concat(" rental_price >= " + min_price + " ");
+                        }
+                        else {
+                            query = query.concat(" AND rental_price >= " + min_price + " ");
+                        }
+                    }
+                    else if(min_max_check[0].contains("max_price")){
+                        String max_price_string = min_max_check[0];
+                        Float max_price = Float.parseFloat(max_price_string.split("=")[1]);
+                        if(query.isEmpty()){
+                            query = query.concat(" rental_price >= " + max_price + " ");
+                        }
+                        else {
+                            query = query.concat(" AND rental_price <= " + max_price + " ");
+                        }
+                    }
+                }
+            }
+            if(queries[i].contains("coordinates")){
+                String[] coordinates_query = queries[i].split("\\$");
+                String coordinates_string = coordinates_query[1];
+                String [] lat_long_string = coordinates_string.split("&");
+                Double lat = Double.parseDouble(lat_long_string[0].split("=")[1]);
+                Double lon = Double.parseDouble(lat_long_string[1].split("=")[1]);
+                Double distance = Double.parseDouble(lat_long_string[2].split("=")[1]);
+                if(query.isEmpty()){
+                    query = query.concat(" (POWER(latitude - " + lat + ", 2) + POWER(longitude - " + lon + ", 2)) < " + distance + " ");
+                }
+                else{
+                    query = query.concat(" AND (POWER(latitude - " + lat + ", 2) + POWER(longitude - " + lon + ", 2)) < " + distance + " ");
                 }
             }
         }
@@ -94,7 +157,6 @@ public class Search extends Endpoint{
                 if(query.contains("a_id")) {
                     query = query.concat(" HAVING COUNT(DISTINCT a_id) = " + anum);
                 }
-
                 rs1 = this.dao.filterwithquery(query);
             }
             ArrayList<JSONObject> listingarr = new ArrayList<>();
