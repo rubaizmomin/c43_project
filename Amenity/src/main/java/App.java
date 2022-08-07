@@ -11,6 +11,7 @@ public class App {
         // TODO: Add server contexts here. Do not set executors for the server, you shouldn't need them.
         server.createContext("/amenity/addamenitytolisting", new Has());
         server.createContext("/amenity/add/", new AddAmenity());
+        server.createContext("/amenity/getAllAmenities", new GetAmenity());
         server.start();
         System.out.printf("Server started on port %d...\n", PORT);
     }

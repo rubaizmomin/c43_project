@@ -33,4 +33,29 @@ public class AmenityRouter extends RequestRouter {
                 break;
         }
     }
+
+    @Override
+    public void handleGet(HttpExchange r) throws JSONException, IOException, InterruptedException {
+        String[] splitUrl = r.getRequestURI().getPath().split("/");
+        System.out.println(r.getRequestURI().toString());
+        if (splitUrl.length != 3) {
+            this.sendStatus(r, 400);
+            return;
+        }
+        String actionString = splitUrl[2];
+        switch (actionString) {
+            case "getAllAmenities":
+                System.out.println("PRINT ME" + actionString);
+                JSONObject bodyJson = new JSONObject();
+                String bodyJsonStr = bodyJson.toString();
+                System.out.println(bodyJsonStr);
+                HttpResponse<String> s = this.sendRequestPost(r.getRequestMethod(), url, r.getRequestURI().toString(), bodyJsonStr);
+                System.out.println(s.body());
+                this.sendResponse(r, new JSONObject(s.body()), s.statusCode());
+                return;
+            default:
+                this.sendStatus(r, 400);
+                break;
+        }
+    }
 }
