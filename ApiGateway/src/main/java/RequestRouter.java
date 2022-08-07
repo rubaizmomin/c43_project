@@ -126,6 +126,6 @@ public class RequestRouter implements HttpHandler {
     public void handlePatch(HttpExchange r) throws JSONException, IOException, InterruptedException {};
     public void handlePost(HttpExchange r) throws JSONException, IOException, InterruptedException {};
     public void handlePut(HttpExchange r) {};
-    public void handleDelete(HttpExchange r){};
+    public void handleDelete(HttpExchange r) throws JSONException, IOException, InterruptedException {};
 }
 

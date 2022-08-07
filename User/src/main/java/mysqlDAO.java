@@ -62,4 +62,34 @@ public class mysqlDAO {
         query = String.format(query, name, email, password, address, occupation, sin, dob, u_id);
         this.st.execute(query);
     }
+
+    public void deleteUser(String u_id) throws SQLException {
+        String query = "DELETE FROM users WHERE u_id = '%s'";
+        query = String.format(query, u_id);
+        this.st.execute(query);
+    }
+
+    public ResultSet getHost(String email) throws SQLException {
+        String query = "SELECT * FROM host WHERE email = '%s'";
+        query = String.format(query, email);
+        return this.st.executeQuery(query);
+    }
+
+    public ResultSet getRenter(String email) throws SQLException {
+        String query = "SELECT * FROM renter WHERE email = '%s'";
+        query = String.format(query, email);
+        return this.st.executeQuery(query);
+    }
+
+    public void deleteHost(String email) throws SQLException {
+        String query ="DELETE FROM host WHERE email = '%s'";
+        query = String.format(query, email);
+        this.st.execute(query);
+    }
+
+    public void deleteRenter(String email) throws SQLException {
+        String query ="DELETE FROM renter WHERE email = '%s'";
+        query = String.format(query, email);
+        this.st.execute(query);
+    }
 }

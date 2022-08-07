@@ -47,6 +47,7 @@ public abstract class Endpoint implements HttpHandler {
                     this.handlePut(r);
                     break;
                 case "DELETE":
+                    System.out.println("DELETE REQUEST");
                     this.handleDelete(r);
                     break;
                 default:

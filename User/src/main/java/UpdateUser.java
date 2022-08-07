@@ -10,7 +10,7 @@ import java.time.Period;
 
 public class UpdateUser extends Endpoint {
     /**
-     * PATCH /user/update/:uid
+     * PATCH /user/updateUser/:uid
      * @body name, email, password, occupation, address, sin, dob
      * @return 200, 400, 404, 500
      * Update a user information using the given information.
