@@ -3,31 +3,215 @@ import axios from 'axios';
 // Style
 import './ListingPage.css';
 
+// Checks if value is floating point
+const checkFloat = (value) => {
+    return value === "" || (value.match(/^[0-9.]+$/i) && parseFloat(value));
+};
+
+// Checks if value is in date format
+const checkDate = (value) => {
+    return value === "" || Date.parse(value);
+};
+
+// Checks if date range is correct
+const checkDateRange = (lowDate, upDate) => {
+    let today = new Date();
+    const offset = today.getTimezoneOffset();
+    today = new Date(today.getTime() - (offset * 60 * 1000));
+    const todayString = today.toISOString().split('T')[0];
+    return Date.parse(todayString) < Date.parse(lowDate) && Date.parse(lowDate) <= Date.parse(upDate);
+}
+
 function SearchPage() {
     const [ListingList, setListingList] = useState([]);
     // Filters
+    const [Filter, setFilter] = useState("?costorder=asc");
     const [PostalCode, setPostalCode] = useState("");
     const [HomeAddress, setHomeAddress] = useState("");
     const [MinDate, setMinDate] = useState(""); // YYYY-MM-DD
     const [MaxDate, setMaxDate] = useState(""); // YYYY-MM-DD
     const [AmenityList, setAmenityList] = useState([]);
-    const [MinPrice, setMinPrice] = useState(""); // YYYY-MM-DD
-    const [MaxPrice, setMaxPrice] = useState(""); // YYYY-MM-DD
+    const [Amenity, setAmenity] = useState([]);
+    const [MinPrice, setMinPrice] = useState("");
+    const [MaxPrice, setMaxPrice] = useState("");
+    const [Latitude, setLatitude] = useState("");
+    const [Longitude, setLongitude] = useState("");
+    const [Distance, setDistance] = useState("");
+    // Order
+    const [CostOrder, setCostOrder] = useState("asc"); // If true, asc, false, desc
 
     useEffect(() => {
-        // Get all available listings
-        let amenityString = AmenityList.length > 0 ? AmenityList.join("&") : "";
-        const filter = `?postal_code=${PostalCode}?home_address=${HomeAddress}?min_date=${MinDate}&max_date=${MaxDate}?amenity=${amenityString}?min_price=${MinPrice}&max_price=${MaxPrice}`;
-        console.log(filter);
-        axios.get(`http://localhost:8000/search/listing${filter}`)
+        // Get all available listings by filters
+        axios.get(`http://localhost:8000/search/listing${Filter}`)
             .then(response => {
                 setListingList(response.data.data);
             });
-    }, [PostalCode, HomeAddress, MinDate, MaxDate, AmenityList, MinPrice, MaxPrice]);
-    
+    }, [Filter]);
 
+    useEffect(() => {
+        axios.get("http://localhost:8000/amenity/getAllAmenities")
+            .then(response => {
+                if (response.data.status === "OK") {
+                    setAmenityList(response.data.data);
+                } else {
+                    console.log("Failed to load amenities");
+                }
+            });
+    }, []);
+
+    // Home Address
     const onSearchText = (event) => {
-        setHomeAddress(event.target.value)
+        setHomeAddress(event.target.value);
+    };
+
+    // Amenity
+    const onAmenity = (event) => {
+        let amenity = Amenity;
+        const selectedAmenity = event.target.value;
+        if (amenity.includes(selectedAmenity)) amenity = amenity.filter(a => a !== selectedAmenity);
+        else amenity.push(selectedAmenity);
+        setAmenity(amenity);
+    };
+
+    // Amenity
+    const amenities = AmenityList && AmenityList.length > 0
+        ? AmenityList.map((amenity, index) => {
+            return (
+                <div key={index} className="filter-check">
+                    <input 
+                        type="checkbox"
+                        value={amenity.amenity_type}
+                        onChange={onAmenity}
+                    />
+                    {amenity.amenity_type}
+                </div>
+            );
+        })
+        : <div></div>;
+
+    // Coordinates - Latitude
+    const onLatitude = (event) => {
+        setLatitude(event.target.value);
+    };
+
+    // Coordinates - Longitude
+    const onLongitude = (event) => {
+        setLongitude(event.target.value);
+    };
+
+    // Coordinates - Distance
+    const onDistance = (event) => {
+        setDistance(event.target.value);
+    };
+
+    // Price Range - Minimum Price
+    const onMinPrice = (event) => {
+        setMinPrice(event.target.value);
+    };
+
+    // Price Range - Maximum Price
+    const onMaxPrice = (event) => {
+        setMaxPrice(event.target.value);
+    };
+
+    // Price Order
+    const onPriceOrder = (event) => {
+        setCostOrder(event.target.value);
+    };
+
+    // Postal Code
+    const onPostalCode = (event) => {
+        setPostalCode(event.target.value);
+    };
+
+    // Date Range - Minimum Date
+    const onMinDate = (event) => {
+        setMinDate(event.target.value);
+    };
+
+    // Date Range - Maximum Date
+    const onMaxDate = (event) => {
+        setMaxDate(event.target.value);
+    };
+
+    const onSearch = () => {
+        // Home Address
+        const homeAddress = HomeAddress.trim().replaceAll(' ', '%20');
+        if (homeAddress !== "" && !homeAddress.match(/^[a-z0-9]+$/i)) {
+            alert("The search filter should be alphanumeric!");
+            return;
+        }
+        let homeAddressString = homeAddress === "" ? "" : `?home_address=${homeAddress}`;
+        // Amenity
+        let amenityString = Amenity.length === 0 ? "" : `?amenities=${Amenity.join("&").replaceAll(' ', '%20')}`;
+        // Price
+        const min = MinPrice.trim().replaceAll(' ', '');
+        const max = MaxPrice.trim().replaceAll(' ', '');
+        if (!checkFloat(min) || !checkFloat(max)) {
+            alert("Price needs to be a floating point!");
+            return;
+        }
+        let priceString = min === "" && max === "" ? "" : "?price$";
+        if (min !== "" && max === "") priceString = priceString + `min_price=${min}`;
+        else if (min === "" && max !== "") priceString = priceString + `max_price=${max}`;
+        else if (min !== "" && max !== "") {
+            if (parseFloat(min) > parseFloat(max)) {
+                alert("Check your price range.");
+                return;
+            }
+            priceString = priceString + `min_price=${min}&max_price=${max}`
+        };
+        // Coordinate
+        const lat = Latitude.trim().replaceAll(' ', '');
+        const long = Longitude.trim().replaceAll(' ', '');
+        const dist = Distance.trim().replaceAll(' ', '');
+        if (!checkFloat(lat) || !checkFloat(long)) {
+            alert("Latitude and longitude has to be a floating point!");
+            return;
+        }
+        let coordinateString = lat === "" || long === "" ? "" : `?coordinates$lat=${lat}&long=${long}`;
+        if (coordinateString !== "") {
+            if (!checkFloat(dist)) {
+                alert("Distance has to be a floating point!");
+                return;
+            }
+            coordinateString = dist === "" ? coordinateString + "&distance=50" : coordinateString + `&distance=${dist}`;
+        }
+        // Cost Order
+        let costOrderString = `?costorder=${CostOrder}`;
+        // Postal Code
+        const postalCode = PostalCode.trim().replaceAll(' ', '');
+        if (postalCode !== "") {
+            if (!postalCode.match(/^[a-zA-Z0-9]+$/i)) {
+                alert("Postal code needs to be alphanumeric!");
+                return;
+            } else if (postalCode.length > 6) {
+                alert("Postal code can't have more than 6 characters!");
+                return;
+            }
+        }
+        let postalcodeString = postalCode === "" ? "" : `?postalcode=${postalCode}`
+        // Available
+        const lowDate = MinDate.trim().replaceAll(' ', '');
+        const upDate = MaxDate.trim().replaceAll(' ', '');
+        if (!checkDate(lowDate) || !checkDate(upDate)) {
+            alert("Date has to be in a correct format!");
+            return;
+        }
+        let dateString = lowDate === "" && upDate === "" ? "" : "?availdate$";
+        if (lowDate !== "" && upDate === "") dateString = dateString + `lowdate=${lowDate}`;
+        else if (lowDate === "" && upDate !== "") dateString = dateString + `upDate=${upDate}`;
+        else if (lowDate !== "" && upDate !== "") {
+            if (!checkDateRange(lowDate, upDate)) {
+                alert("Check your date range.");
+                return;
+            }
+            dateString = dateString + `lowdate=${lowDate}&upDate=${upDate}`;
+        }
+        // Create filter
+        const filter = `${homeAddressString}${amenityString}${priceString}${coordinateString}${costOrderString}${postalcodeString}${dateString}`;
+        console.log(filter);
+        setFilter(filter);
     };
 
     const listingList = ListingList && ListingList.length > 0 
@@ -44,26 +228,6 @@ function SearchPage() {
             );
         }) : <div>No available list</div>;
 
-    const onPostalCode = (event) => {
-        setPostalCode(event.target.event);
-    };
-
-    const onMinDate = (event) => {
-        setMinDate(event.target.event);
-    };
-
-    const onMaxDate = (event) => {
-        setMaxDate(event.target.event);
-    };
-
-    const onMinPrice = (event) => {
-        setMinPrice(event.target.event);
-    };
-
-    const onMaxPrice = (event) => {
-        setMaxPrice(event.target.event);
-    };
-
     return (
         <div className="search-container">
             <h1>Search Listing</h1>
@@ -75,30 +239,41 @@ function SearchPage() {
             />
             <div className="search-filters">
                 <div className="filter-list">
-                    <p>Location</p>
-                    <div>Country</div>
-                    <div>City</div>
-                    <input placeholder="Postal Code" value={PostalCode} onChange={onPostalCode} />
+                    <p className="filter-category">Amenities</p>
+                    <div className="filter-checkbox">
+                        {AmenityList && amenities}
+                    </div>
                 </div>
                 <div className="filter-list">
-                    <p>Distance</p>
-                    <div>Distance</div>
-                    <div>Latitude</div>
-                    <div>Longitude</div>
+                    <p className="filter-category">Coordinates</p>
+                    <input placeholder="Latitude" value={Latitude} onChange={onLatitude} />
+                    <input placeholder="Longitude" value={Longitude} onChange={onLongitude} />
+                    <input placeholder="Distance" value={Distance} onChange={onDistance} />
                 </div>
                 <div className="filter-list">
-                    <p>Date Range</p>
-                    <input placeholder="Starting Date" value={MinDate} onChange={onMinDate} />
-                    <input placeholder="Ending Date" value={MaxDate} onChange={onMaxDate} />
-                </div>
-                <div className="filter-list">
-                    <p>Price Range</p>
+                    <p className="filter-category">Price Range</p>
                     <input placeholder="Minimum Price" value={MinPrice} onChange={onMinPrice} />
                     <input placeholder="Maximum Price" value={MaxPrice} onChange={onMaxPrice} />
                 </div>
+                <div className="filter-list">
+                    <p className="filter-category">Price Order</p>
+                    <select onChange={onPriceOrder}>
+                        <option value="asc">Ascending Order</option>
+                        <option value="desc">Descending Order</option>
+                    </select>
+                </div>
+                <div className="filter-list">
+                    <p className="filter-category">Postal Code</p>
+                    <input placeholder="Postal Code" value={PostalCode} onChange={onPostalCode} />
+                </div>
+                <div className="filter-list">
+                    <p className="filter-category">Date Range</p>
+                    <input type="date" placeholder="Starting Date" value={MinDate} onChange={onMinDate} />
+                    <input type="date" placeholder="Ending Date" value={MaxDate} onChange={onMaxDate} />
+                </div>
             </div>
-            <div className="search-sort">
-
+            <div className="filter-button">
+                <button onClick={onSearch}>Search</button>
             </div>
             <div className="search-listings">
                 <h3>Available Listings</h3>

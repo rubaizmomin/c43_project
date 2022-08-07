@@ -4,14 +4,6 @@ import axios from 'axios'
 // Style
 import './ListingPage.css';
 
-const sampleAmenity = [
-    { a_id: 1, amenity_type: "Wifi" },
-    { a_id: 2, amenity_type: "Kitchen" },
-    { a_id: 3, amenity_type: "Washer" },
-    { a_id: 4, amenity_type: "Dryer" },
-    { a_id: 5, amenity_type: "Air Conditioning" },
-];
-
 function AddListingPage() {
     const navigate = useNavigate();
     const u_id = JSON.parse(localStorage.getItem("u_id")) || "";
@@ -38,7 +30,6 @@ function AddListingPage() {
             });
     }, []);
     
-
     const onListingType = (event) => {
         setListingType(event.target.value);
     };

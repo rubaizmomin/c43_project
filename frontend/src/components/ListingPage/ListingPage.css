@@ -73,6 +73,7 @@
 }
 
 .search-container>.search-bar {
+    margin-bottom: 10px;
     border: 1px solid #aaa;
     border-radius: 10px;
     padding: 10px 15px;
@@ -83,7 +84,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .search-container>.search-filters>.filter-list {
@@ -93,12 +94,32 @@
     align-items: center;
 }
 
-.search-container>.search-filters>.filter-list>p {
-    margin-right: 10px;
+.search-container>.search-filters>.filter-list>.filter-category {
+    margin-right: 20px;
     border-radius: 5px;
     padding: 5px 15px;
+    width: 140px;
     background-color: aquamarine;
     font-weight: bold;
+}
+
+.search-container>.search-filters>.filter-list>.filter-checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search-container>.search-filters>.filter-list>.filter-checkbox>.filter-check {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.search-container>.search-filters>.filter-list>select {
+    padding: 3px 8px;
 }
 
 .search-container>.search-filters>.filter-list>input {
@@ -113,11 +134,23 @@
     margin-right: 10px;
 }
 
+.search-container>.filter-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.search-container>.filter-button button {
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+
 .search-container>.search-listings {
     margin-top: 20px;
     width: 700px;
     height: 80%;
-    
 }
 
 .search-container>.search-listings>.search-body {
