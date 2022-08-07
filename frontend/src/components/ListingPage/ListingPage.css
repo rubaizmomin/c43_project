@@ -63,7 +63,7 @@
 }
 
 /* Search Page */
-.search-container {
+.search {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -72,7 +72,7 @@
     height: 100%;
 }
 
-.search-container>.search-bar {
+.search>.search-bar {
     margin-bottom: 10px;
     border: 1px solid #aaa;
     border-radius: 10px;
@@ -80,21 +80,21 @@
     width: 1000px;
 }
 
-.search-container>.search-filters {
+.search>.search-filters {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
 }
 
-.search-container>.search-filters>.filter-list {
+.search>.search-filters>.filter-list {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
 }
 
-.search-container>.search-filters>.filter-list>.filter-category {
+.search>.search-filters>.filter-list>.filter-category {
     margin-right: 20px;
     border-radius: 5px;
     padding: 5px 15px;
@@ -103,14 +103,14 @@
     font-weight: bold;
 }
 
-.search-container>.search-filters>.filter-list>.filter-checkbox {
+.search>.search-filters>.filter-list>.filter-checkbox {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
 }
 
-.search-container>.search-filters>.filter-list>.filter-checkbox>.filter-check {
+.search>.search-filters>.filter-list>.filter-checkbox>.filter-check {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -118,23 +118,23 @@
     margin-right: 10px;
 }
 
-.search-container>.search-filters>.filter-list>select {
+.search>.search-filters>.filter-list>select {
     padding: 3px 8px;
 }
 
-.search-container>.search-filters>.filter-list>input {
+.search>.search-filters>.filter-list>input {
     padding: 3px 8px;
 }
 
-.search-container>.search-filters>.filter-list>input:not(:last-child) {
+.search>.search-filters>.filter-list>input:not(:last-child) {
     margin-right: 10px;
 }
 
-.search-container>.search-filters>.filter-list>div:not(:last-child) {
+.search>.search-filters>.filter-list>div:not(:last-child) {
     margin-right: 10px;
 }
 
-.search-container>.filter-button {
+.search>.filter-button {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -142,18 +142,18 @@
     width: 100%;
 }
 
-.search-container>.filter-button button {
+.search>.filter-button button {
     margin-top: 10px;
     padding: 5px 10px;
 }
 
-.search-container>.search-listings {
+.search>.search-listings {
     margin-top: 30px;
     width: 1000px;
     height: 80%;
 }
 
-.search-container>.search-listings>.search-header {
+.search>.search-listings>.search-header {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -166,32 +166,37 @@
     font-weight: bold;
 }
 
-.search-container>.search-listings>.search-body {
+.search>.search-listings>.search-body {
     padding: 0px 20px;
     width: 100%;
     height: 100%;
     overflow-y: scroll;
 }
 
-.search-container>.search-listings>.search-body button {
+.search>.search-listings>.search-body button {
     padding: 3px 13px;
 }
 
-.search-container>.search-listings .search-listing-info {
+.search>.search-listings .search-listing-info {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-.search-container .table.small {
+.search .table.small {
     width: 150px;
 }
 
-.search-container .table.medium {
+.search .table.medium {
     width: 300px;
 }
 
-.search-container .table.large {
+.search .table.large {
     width: 500px;
+}
+
+/* MyListing Page */
+.mylisting {
+
 }

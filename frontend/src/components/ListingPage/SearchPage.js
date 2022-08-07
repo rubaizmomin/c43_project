@@ -259,7 +259,7 @@ function SearchPage() {
         }) : <div>No available list</div>;
 
     return (
-        <div className="search-container">
+        <div className="search container">
             <h1>Search Listing</h1>
             <input 
                 placeholder="Search by keyword"

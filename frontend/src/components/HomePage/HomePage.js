@@ -18,12 +18,18 @@ function HomePage() {
     };
     
     return (
-        <div className="home-contianer">
+        <div className="home container">
             <h1>HomePage</h1>
             <div className="home-menu">
-                <button onClick={onAddListing}>Add Listing</button>
-                <button onClick={onMyListing}>My Listing</button>
-                <button onClick={onSearchListing}>Search Listing</button>
+                <div className="host-menu">
+                    <h3>Host</h3>
+                    <button onClick={onAddListing}>Add Listing</button>
+                    <button onClick={onMyListing}>My Listing</button>
+                </div>
+                <div className="renter-menu">
+                    <h3>Renter</h3>
+                    <button onClick={onSearchListing}>Search Listing</button>
+                </div>
             </div>
         </div>
     );

@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+// Style
+import './ListingPage.css';
 
 function MyListing() {
     const u_id = JSON.parse(localStorage.getItem("u_id")) || "";
@@ -20,7 +22,9 @@ function MyListing() {
     }, [u_id]);
 
   return (
-    <div>MyListing</div>
+    <div className="mylisting container">
+        MyListing
+    </div>
   )
 }
 
