@@ -7,6 +7,7 @@ import RegisterPage from './components/AuthPage/RegisterPage';
 import LoginPage from './components/AuthPage/LoginPage';
 import HomePage from './components/HomePage/HomePage';
 import AddListingPage from './components/ListingPage/AddListingPage';
+import SearchPage from './components/ListingPage/SearchPage';
 // Style
 import './App.css';
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/mybnb" element={<AuthorizedUser />}>
             <Route path="/mybnb" element={<HomePage />} />
             <Route path="/mybnb/addlisting" element={<AddListingPage />} />
+            <Route path="/mybnb/search" element={<SearchPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -6,6 +6,21 @@
     height: 100%;
 }
 
-.home-contianer>button {
+.home-contianer h1 {
+    margin-bottom: 30px;
+}
+
+.home-contianer button {
     padding: 5px 10px;
+}
+
+.home-contianer button:not(:last-child) {
+    margin-right: 10px;
+}
+
+.home-container>.home-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
