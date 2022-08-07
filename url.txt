@@ -1,0 +1,15 @@
+localhost:8000/search/listing?home_address=?amenities=wifi&airconditioning?price%min_price=100&max_price=1500?coordinates%lat=1000.04&long=599.04&distance=50?costorder=desc?postalcode=A1A1A1?availdate%lowdate=2022-10-14&update=2022-10-18
+
+home_address: if the user wants all possibilities of address, the search string should be empty as seen above. if the user wants a specific address like utsc, then it will be like home_address=utsc.
+
+amenities: if user wants all possibilities of amenities, the result will be empty string like amenities= or if they want particular amenities like above, the can have amenities=wifi&airconditioning&kitchen&dryer&washer.
+
+price: price has two or more filters. all attributes which have two or filters like min and max, we will denote the attribute by %. so % will always go with price, coordinates,availdate.
+
+coordinates: if the user enters lat, then long cannot be empty meaning the user will either enter both details or none. if the user does not enter lat and long, then it will be similar to other attributes. lat=&lat=&distance=. also if lat and long are not mentioned then distance should also be empty. default value of distance if lat and long are mentioned and user does not mention anything for distance, it will be 50
+
+costorder: it is the price order. it will be eith asc or desc. default is asc. so if user does not mention anything, the url will have costorder=asc
+
+postalcode: similar to home_address.
+
+availdate: it has two filters so we use % after attribute name. lowdate means the lowest end of the date and update meaning the highest date. if one of them is entered by the user, the other cannot be empty meaning if the user enters the lowdate, the update cannot be empty. similar to latitude and longitude. either lowdate=&update= or there will be specific values. the date should be in yyyy-mm-dd format

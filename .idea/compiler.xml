@@ -6,12 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Host" />
-        <module name="amenitymicroservice" />
         <module name="Listing" />
-        <module name="ApiGateway" />
         <module name="Renter" />
         <module name="usermicroservice" />
+        <module name="Search" />
+        <module name="Host" />
+        <module name="amenitymicroservice" />
+        <module name="ApiGateway" />
       </profile>
     </annotationProcessing>
   </component>
