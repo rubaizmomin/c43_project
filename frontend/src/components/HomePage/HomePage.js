@@ -9,6 +9,10 @@ function HomePage() {
         navigate('/mybnb/addlisting');
     };
 
+    const onMyListing = () => {
+        navigate('/mybnb/mylisting');
+    };
+
     const onSearchListing = () => {
         navigate('/mybnb/search');
     };
@@ -18,6 +22,7 @@ function HomePage() {
             <h1>HomePage</h1>
             <div className="home-menu">
                 <button onClick={onAddListing}>Add Listing</button>
+                <button onClick={onMyListing}>My Listing</button>
                 <button onClick={onSearchListing}>Search Listing</button>
             </div>
         </div>

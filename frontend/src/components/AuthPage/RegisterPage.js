@@ -4,14 +4,10 @@ import axios from 'axios';
 // Style
 import './AuthPage.css';
 
-let year = [];
-for (let i = 1900; i < 2023; i++) {
-    year.push(<option key={i} value={i}>{i}</option>);
-}
-let month = [];
-for (let i = 1; i < 13; i++) {
-    month.push(<option key={i} value={i}>{i}</option>);
-}
+// Checks if value is in date format
+const checkDate = (value) => {
+    return value !== "" || Date.parse(value);
+};
 
 function RegisterPage() {
     const navigate = useNavigate();
@@ -21,8 +17,7 @@ function RegisterPage() {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [Address, setAddress] = useState("");
-    const [DOB, setDOB] = useState(['1900', '1', '1']);
-    const [Date, setDate] = useState([]);
+    const [DOB, setDOB] = useState("");
     const [Occupation, setOccupation] = useState("");
     const [SIN, setSIN] = useState("");
 
@@ -32,25 +27,6 @@ function RegisterPage() {
             navigate('/mybnb');
         }
     }, [u_id, navigate]);
-
-    useEffect(() => {
-        let date = [];
-        let dateRange = 31;
-
-        console.log(DOB);
-        if (DOB && DOB !== [] && DOB.length >= 2) {
-            if (parseInt(DOB[1]) === 2) { // Leap year
-                if (parseInt(DOB[0]) % 4 === 0) dateRange = 29;
-                else dateRange = 28;
-            } else if (['2', '4', '6', '9', '11'].includes(DOB[1])) { 
-                dateRange = 30;
-            }
-        }
-        for (let i = 1; i <= dateRange; i++) {
-            date.push(<option key={i} value={i}>{i}</option>);
-        }
-        setDate(date);
-    }, [DOB]);
     
     const onName = (event) => {
         setName(event.target.value);
@@ -68,35 +44,9 @@ function RegisterPage() {
         setAddress(event.target.value);
     };
 
-    const onDOBYear = (event) => {
-        let dob = [...DOB];
-        dob[0] = event.target.value;
-        setDOB(dob);
-        console.log(dob);
+    const onDOB = (event) => {
+        setDOB(event.target.value);
     };
-
-    const onDOBMonth = (event) => {
-        if (!DOB || DOB.length < 1) {
-            alert("Select year.");
-            return;
-        }
-        let dob = [...DOB];
-        dob[1] = event.target.value;
-        setDOB(dob);
-        console.log(dob);
-    }
-
-    const onDOBDate = (event) => {
-        if (!DOB || DOB.length < 2) {
-            alert("Select year and month.");
-            return;
-        }
-        let dob = [...DOB];
-        dob[2] = event.target.value;
-        setDOB(dob);
-        console.log(dob);
-    }
-
     const onOccupation = (event) => {
         setOccupation(event.target.value);
     };
@@ -113,7 +63,7 @@ function RegisterPage() {
             alert("SIN Number has to be in 10 digits.");
             return;
         }
-        if (!DOB || DOB === [] || DOB.length !== 2) {
+        if (!checkDate(DOB)) {
             alert("Select your date of birth.");
             return;
         }
@@ -126,7 +76,7 @@ function RegisterPage() {
             password: Password.trim(),
             name: Name.trim(),
             address: Address.trim(),
-            dob: `${DOB[0]}/${DOB[1]}/${DOB[2]}`,
+            dob: DOB.replaceAll('-', '/'),
             occupation: Occupation.trim(),
             sin: SIN,
         };
@@ -156,11 +106,7 @@ function RegisterPage() {
                 <p>Address</p>
                 <input value={Address} onChange={onAddress} />
                 <p>Date of Birth (DD/MM/YYYY)</p>
-                <div className="auth-dob">
-                    <select onChange={onDOBYear}>{year}</select>
-                    <select onChange={onDOBMonth}>{month}</select>
-                    <select onChange={onDOBDate}>{Date}</select>
-                </div>
+                <input type="date" value={DOB} onChange={onDOB} />
                 {/* <input value={DOB} onChange={onDOB} /> */}
                 <p>Occupation</p>
                 <input value={Occupation} onChange={onOccupation} />

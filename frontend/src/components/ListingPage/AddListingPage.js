@@ -60,7 +60,7 @@ function AddListingPage() {
 
     const onAmenity = (event) => {
         let amenity = Amenity;
-        const selectedAmenity = event.target.id;
+        const selectedAmenity = event.target.value;
         if (amenity.includes(selectedAmenity)) {
             amenity = amenity.filter(a => a !== selectedAmenity);
         } else {
@@ -77,7 +77,6 @@ function AddListingPage() {
                         type="checkbox" 
                         name={amenity.amenity_type} 
                         value={amenity.amenity_type} 
-                        id={amenity.a_id}
                         onChange={onAmenity}
                     />
                     {amenity.amenity_type}
@@ -103,7 +102,7 @@ function AddListingPage() {
             amenity: Amenity,
         };
         console.log(variables);
-        axios.post("http://localhost:8000/listing/add", variables)
+        axios.post("http://localhost:8000/listing/addlisting", variables)
             .then(response => {
                 console.log(response.data);
                 if (response.data.status === "OK") {
