@@ -46,4 +46,9 @@ public class mysqlDAO {
         this.st.execute(query);
         return;
     }
+
+    public ResultSet getAllAmenity() throws SQLException {
+        String query = "SELECT * FROM amenity";
+        return this.st.executeQuery(query);
+    }
 }
