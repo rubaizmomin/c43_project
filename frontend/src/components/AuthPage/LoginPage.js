@@ -42,6 +42,14 @@ function LoginPage() {
                 } else {
                     alert("Failed to login");
                 }
+            }).catch((error) => {
+                if (error.response) { // Server response
+                    alert(error.message);
+                } else if (error.request) { // No response
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
             });
     };
 

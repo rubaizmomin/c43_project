@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 // Style
 import './ListingPage.css';
+
+const sampleAmenity = [
+    { a_id: 1, amenity_type: "Wifi" },
+    { a_id: 2, amenity_type: "Kitchen" },
+    { a_id: 3, amenity_type: "Washer" },
+    { a_id: 4, amenity_type: "Dryer" },
+    { a_id: 5, amenity_type: "Air Conditioning" },
+];
 
 function AddListingPage() {
     const navigate = useNavigate();
@@ -15,6 +23,21 @@ function AddListingPage() {
     const [Country, setCountry] = useState("");
     const [Latitude, setLatitude] = useState("");
     const [Longitude, setLongitude] = useState("");
+    const [AmenityList, setAmenityList] = useState([]);
+    const [Amenity, setAmenity] = useState([]);
+
+    useEffect(() => {
+        setAmenityList(sampleAmenity);
+        // axios.get("http://localhost:8000/amenity/getAllAmenities")
+        //     .then(response => {
+        //         if (response.data.status === "OK") {
+        //             setAmenityList(response.data.data);
+        //         } else {
+        //             console.log("Failed to load amenities");
+        //         }
+        //     });
+    }, []);
+    
 
     const onListingType = (event) => {
         setListingType(event.target.value);
@@ -44,12 +67,39 @@ function AddListingPage() {
         setLongitude(event.target.value);
     };
 
+    const onAmenity = (event) => {
+        let amenity = Amenity;
+        const selectedAmenity = event.target.id;
+        if (amenity.includes(selectedAmenity)) {
+            amenity = amenity.filter(a => a !== selectedAmenity);
+        } else {
+            amenity.push(selectedAmenity);
+        }
+        setAmenity(amenity);
+    };
+
+    const amenities = AmenityList && AmenityList.length > 0
+        ? AmenityList.map((amenity, index) => {
+            return (
+                <div key={index} className="addlisting-checkbox">
+                    <input 
+                        type="checkbox" 
+                        name={amenity.amenity_type} 
+                        value={amenity.amenity_type} 
+                        id={amenity.a_id}
+                        onChange={onAmenity}
+                    />
+                    {amenity.amenity_type}
+                </div>
+            );
+        })
+        : <div></div>;
+
     const onSubmit = () => {
         if (u_id === "") {
             alert ("Failed to load user information");
             return;
         }
-
         const variables = {
             u_id: `${u_id}`,
             listing_type: ListingType,
@@ -59,8 +109,9 @@ function AddListingPage() {
             country: Country,
             latitude: Latitude,
             longitude: Longitude,
+            amenity: Amenity,
         };
-
+        console.log(variables);
         axios.post("http://localhost:8000/listing/add", variables)
             .then(response => {
                 console.log(response.data);
@@ -68,7 +119,7 @@ function AddListingPage() {
                     alert("Successfully added listing!");
                     navigate('/mybnb');
                 } else {
-                    alert("Failed to add listing");
+                    console.log("Failed to add listing");
                 }
             });
     };
@@ -96,6 +147,10 @@ function AddListingPage() {
                 <input value={Latitude} onChange={onLatitude} />
                 <p>Longitude</p>
                 <input value={Longitude} onChange={onLongitude} />
+                <p>Amenity</p>
+                <div className="addlisting-amenity">
+                    {AmenityList && amenities}
+                </div>
                 <div className="addlisting-button">
                     <button onClick={onSubmit}>Add Listing</button>
                 </div>

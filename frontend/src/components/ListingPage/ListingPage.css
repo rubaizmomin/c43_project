@@ -32,6 +32,22 @@
     margin-bottom: 5px;
     padding: 5px;
     width: 100%;
+    overflow-x:visible;
+}
+
+.addlisting-container>.addlisting-form>.addlisting-amenity {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.addlisting-container>.addlisting-form>.addlisting-amenity .addlisting-checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .addlisting-container .addlisting-button {
@@ -44,4 +60,14 @@
 .addlisting-container .addlisting-button>button {
     margin-top: 10px;
     padding: 5px 10px;
+}
+
+/* Search Page */
+.search-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
