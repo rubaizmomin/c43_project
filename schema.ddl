@@ -8,9 +8,9 @@ CREATE TABLE Users (
     password varchar(30) NOT NULL,
     name varchar(30) NOT NULL,
     address varchar(30) NOT NULL,
-    dob varchar(10) NOT NULL,
+    dob char(10) NOT NULL,
     occupation varchar(30) NOT NULL,
-    sin int NOT NULL UNIQUE
+    sin char(10) NOT NULL UNIQUE
 );
 
 CREATE TABLE Renter (
@@ -27,7 +27,7 @@ CREATE TABLE Host (
 CREATE TABLE Listing (
     l_id int NOT NULL AUTO_INCREMENT UNIQUE,
     listing_type varchar(30) NOT NULL,
-    postal_code varchar(6) NOT NULL,
+    postal_code char(6) NOT NULL,
     home_address varchar(30) NOT NULL PRIMARY KEY,
     city varchar (30) NOT NULL,
     country varchar (30) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE Listing (
 );
 
 CREATE TABLE Calendar (
-	available_date date NOT NULL PRIMARY KEY,
+	available_date date NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE Amenity (
@@ -47,7 +47,7 @@ CREATE TABLE Amenity (
 CREATE TABLE available (
     home_address varchar(30) NOT NULL,
     available_date date NOT NULL,
-    rental_price float NOT NULL
+    rental_price double NOT NULL,
     PRIMARY KEY (home_address, available_date),
     FOREIGN KEY (home_address) REFERENCES Listing (home_address),
     FOREIGN KEY (available_date) REFERENCES Calendar (available_date)
@@ -81,7 +81,7 @@ CREATE TABLE owns (
 );
 
 CREATE TABLE review (
-    booking_date date NOT NULL,
+    booking_date char(10) NOT NULL,
     home_address varchar(30) NOT NULL,
     host_rating int,
     host_comment varchar(30),

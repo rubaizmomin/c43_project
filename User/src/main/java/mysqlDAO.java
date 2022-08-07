@@ -23,7 +23,13 @@ public class mysqlDAO {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
     }
-    public ResultSet getUserfromUid(String email) throws SQLException {
+    public ResultSet getUserfromUid(String u_id) throws SQLException {
+        String query = "SELECT * FROM Users WHERE u_id = '%s'";
+        query = String.format(query, u_id);
+        return this.st.executeQuery(query);
+    }
+
+    public ResultSet getUserfromEmail(String email) throws SQLException {
         String query = "SELECT * FROM Users WHERE email = '%s'";
         query = String.format(query, email);
         return this.st.executeQuery(query);
@@ -39,9 +45,51 @@ public class mysqlDAO {
         return this.st.executeQuery(query);
     }
 
-    public void addUser(String name, String email, String password, String address, String occupation, Integer sin, String dob) throws SQLException {
-        String query = "INSERT INTO users (name, email, password, address, occupation, sin, dob) VALUES ('%s', '%s','%s', '%s', '%s', %d, '%s')";
+    public ResultSet checkSin(String sin) throws SQLException {
+        String query = "SELECT * FROM users WHERE sin = '%s'";
+        query = String.format(query, sin);
+        return this.st.executeQuery(query);
+    }
+
+    public void addUser(String name, String email, String password, String address, String occupation, String sin, String dob) throws SQLException {
+        String query = "INSERT INTO users (name, email, password, address, occupation, sin, dob) VALUES ('%s', '%s','%s', '%s', '%s', %s, '%s')";
         query = String.format(query, name, email, password, address, occupation, sin, dob);
+        this.st.execute(query);
+    }
+
+    public void updateUser(String u_id, String name, String email, String password, String address, String occupation, String sin, String dob) throws SQLException {
+        String query = "UPDATE users SET name='%s', email='%s', password='%s', address='%s', occupation='%s', sin='%s', dob='%s' WHERE u_id = '%s'";
+        query = String.format(query, name, email, password, address, occupation, sin, dob, u_id);
+        this.st.execute(query);
+    }
+
+    public void deleteUser(String u_id) throws SQLException {
+        String query = "DELETE FROM users WHERE u_id = '%s'";
+        query = String.format(query, u_id);
+        this.st.execute(query);
+    }
+
+    public ResultSet getHost(String email) throws SQLException {
+        String query = "SELECT * FROM host WHERE email = '%s'";
+        query = String.format(query, email);
+        return this.st.executeQuery(query);
+    }
+
+    public ResultSet getRenter(String email) throws SQLException {
+        String query = "SELECT * FROM renter WHERE email = '%s'";
+        query = String.format(query, email);
+        return this.st.executeQuery(query);
+    }
+
+    public void deleteHost(String email) throws SQLException {
+        String query ="DELETE FROM host WHERE email = '%s'";
+        query = String.format(query, email);
+        this.st.execute(query);
+    }
+
+    public void deleteRenter(String email) throws SQLException {
+        String query ="DELETE FROM renter WHERE email = '%s'";
+        query = String.format(query, email);
         this.st.execute(query);
     }
 }

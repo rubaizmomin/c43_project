@@ -36,6 +36,7 @@ public abstract class Endpoint implements HttpHandler {
                     this.handleGet(r);
                     break;
                 case "PATCH":
+                    System.out.println("PATCH REQUEST");
                     this.handlePatch(r);
                     break;
                 case "POST":
@@ -46,6 +47,7 @@ public abstract class Endpoint implements HttpHandler {
                     this.handlePut(r);
                     break;
                 case "DELETE":
+                    System.out.println("DELETE REQUEST");
                     this.handleDelete(r);
                     break;
                 default:
@@ -100,7 +102,7 @@ public abstract class Endpoint implements HttpHandler {
 
     public void handleGet(HttpExchange r) throws IOException, JSONException {};
 
-    public void handlePatch(HttpExchange r) throws IOException, JSONException {};
+    public void handlePatch(HttpExchange r) throws IOException, JSONException, SQLException {};
 
     public void handlePost(HttpExchange r) throws IOException, JSONException, SQLException {};
 

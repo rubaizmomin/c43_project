@@ -61,7 +61,7 @@ public class Login extends Endpoint{
         // update db, return 500 if error:
         JSONObject json = new JSONObject();
         try{
-            ResultSet rs3 = this.dao.getUserfromUid(email);
+            ResultSet rs3 = this.dao.getUserfromEmail(email);
             if(rs3.next()){
                 json.put("u_id", rs3.getInt("u_id"));
             }
