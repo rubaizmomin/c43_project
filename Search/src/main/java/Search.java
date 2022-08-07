@@ -16,6 +16,7 @@ public class Search extends Endpoint{
         String [] queries = r.getRequestURI().toString().split("\\?");
         String query = "";
         Integer anum = 0;
+        Integer coststatus = 0;
         for(int i = 0; i < queries.length; i++){
             System.out.println(queries[i]);
         }
@@ -72,15 +73,6 @@ public class Search extends Endpoint{
                         return;
                     }
                 }
-//                for(int k = 0; k < alist.size(); k++) {
-//                    if (query.isEmpty()) {
-//                        query = query.concat("a_id = " + alist.get(k).toString() + " ");
-//                    } else if(query.contains("a_id")) {
-//                        query = query.concat(" OR a_id = " + alist.get(k).toString() + " ");
-//                    } else {
-//                        query = query.concat(" AND a_id = " + alist.get(k).toString() + " ");
-//                    }
-//                }
                 if (query.isEmpty()) {
                     query = query.concat(" a_id IN (");
                 } else {
@@ -146,16 +138,102 @@ public class Search extends Endpoint{
                     query = query.concat(" AND (POWER(latitude - " + lat + ", 2) + POWER(longitude - " + lon + ", 2)) < " + distance + " ");
                 }
             }
+            if(queries[i].contains("costorder")){
+                String[] order_query = queries[i].split("=");
+                String order = order_query[1];
+                if(order.equals("asc")){
+                    continue;
+                }
+                else if(order.equals("desc")){
+                    coststatus = 1;
+                }
+            }
+            if(queries[i].contains("availdate")){
+                String[] date_query = queries[i].split("\\$");
+                String low_up_maybe = date_query[1];
+                String [] low_up_check = low_up_maybe.split("&");
+                if(low_up_check.length == 2){
+                    String lowdate_string = low_up_check[0];
+                    String update_string = low_up_check[1];
+                    String lowdate = lowdate_string.split("=")[1];
+                    String update = update_string.split("=")[1];
+                    if(query.isEmpty()){
+                        query = query.concat(" available_date between '" + lowdate + "' and '" + update + "' ");
+                        System.out.println(query);
+                    }
+                    else {
+                        query = query.concat(" AND available_date between '" + lowdate + "' and '" + update + "' ");
+                        System.out.println(query);
+                    }
+                }
+                if(low_up_check.length == 1){
+                    if(low_up_check[0].contains("lowdate")){
+                        String lowdate_string = low_up_check[0];
+                        String lowdate = lowdate_string.split("=")[1];
+                        if(query.isEmpty()){
+                            query = query.concat(" available_date  >= '" + lowdate + "' ");
+                        }
+                        else {
+                            query = query.concat(" AND available_date >= '" + lowdate + "' ");
+                        }
+                    }
+                    else if(low_up_check[0].contains("update")){
+                        String update_string = low_up_check[0];
+                        String update = update_string.split("=")[1];
+                        System.out.println(update);
+                        if(query.isEmpty()){
+                            query = query.concat(" available_date <= '" + update + "' ");
+
+                        }
+                        else {
+                            query = query.concat(" AND available_date <= '" + update + "' ");
+
+                        }
+                    }
+                }
+            }
+            if(queries[i].contains("postalcode")){
+                String[] postalcode_query = queries[i].split("=");
+                if (postalcode_query.length == 2) {
+                    String encoded_code = postalcode_query[1];
+                    String decoded_code = null;
+                    try {
+                        decoded_code = URLDecoder.decode(encoded_code, "UTF-8");
+                    } catch (Exception e) {
+                        System.out.println("Cannot convert UTF of postal");
+                        this.sendStatus(r, 500);
+                        return;
+                    }
+                    if (query.isEmpty()) {
+                        query = query.concat("(postal_code LIKE '%" + decoded_code + "%' OR " + "'" + decoded_code + "') ");
+                    } else{
+                        query = query.concat(" AND (postal_code LIKE '%" + decoded_code + "%' OR " + "'" + decoded_code + "') ");
+                    }
+                }
+            }
         }
         try{
             ResultSet rs1 = null;
-            query = query.concat("GROUP BY home_address ");
             if(query.isEmpty()) {
-                rs1 = this.dao.filterwithoutquery();
+                query = query.concat("GROUP BY home_address ");
+                if(coststatus == 1){
+                    query = query.concat(" ORDER BY rental_price DESC");
+                }
+                else{
+                    query = query.concat(" ORDER BY rental_price ASC");
+                }
+                rs1 = this.dao.filterwithoutquery(query);
             }
             else if(!query.isEmpty()){
+                query = query.concat("GROUP BY home_address ");
                 if(query.contains("a_id")) {
                     query = query.concat(" HAVING COUNT(DISTINCT a_id) = " + anum);
+                }
+                if(coststatus == 1){
+                    query = query.concat(" ORDER BY rental_price DESC");
+                }
+                else{
+                    query = query.concat(" ORDER BY rental_price ASC");
                 }
                 rs1 = this.dao.filterwithquery(query);
             }
