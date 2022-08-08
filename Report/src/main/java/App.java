@@ -11,6 +11,9 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", PORT), 0);
         // TODO: Add server contexts here. Do not set executors for the server, you shouldn't need them.
         server.createContext("/report/bydatebycity", new bydatebycity());
+        server.createContext("/report/bydatebypostalcode", new bydatebypostalcode());
+        server.createContext("/report/bycitycountry", new bycitycountry());
+        server.createContext("/report/bycitycountrypostalcode", new bycitycountrypostalcode());
         server.start();
         System.out.printf("Server started on port %d...\n", PORT);
     }

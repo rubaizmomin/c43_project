@@ -20,6 +20,9 @@ public class ReportRouter extends RequestRouter{
             switch (actionString) {
                 //uri:8000/rent
                 case "bydatebycity":
+                case "bydatebypostalcode":
+                case "bycitycountrypostalcode":
+                case "bycitycountry":
                     String bodyStr = Utils.convert(r.getRequestBody());
                     JSONObject bodyJson = new JSONObject(bodyStr);
                     String bodyJsonStr = bodyJson.toString();

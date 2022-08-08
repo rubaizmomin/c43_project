@@ -22,4 +22,20 @@ public class mysqlDAO {
         query = String.format(query, low, up, city);
         return this.st.executeQuery(query);
     }
+    public ResultSet bydatebypc(String low, String up, String postalcode) throws SQLException {
+        String query = "select * from listing natural join rents where rent_date between '%s' and '%s' and postal_code = '%s'";
+        query = String.format(query, low, up, postalcode);
+        return this.st.executeQuery(query);
+    }
+
+    public ResultSet bycitycountrypostalcode(String city, String country, String postalcode) throws SQLException {
+        String query = "select * from listing where city = '%s' and country = '%s' and postal_code = '%s'";
+        query = String.format(query, city, country, postalcode);
+        return this.st.executeQuery(query);
+    }
+    public ResultSet bycitycountry(String city, String country) throws SQLException {
+        String query = "select * from listing where city = '%s' and country = '%s'";
+        query = String.format(query, city, country);
+        return this.st.executeQuery(query);
+    }
 }
