@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Book extends Endpoint{
-//    {
+public class Book extends Endpoint {
+    //    {
     //    u_id: String,
 //        payment_info : 19284984938493
 //        booking_date: [
@@ -18,14 +18,14 @@ public class Book extends Endpoint{
 //                        ]
 //    }rent/book/l_id
     @Override
-    public void handlePost(HttpExchange r) throws IOException, JSONException {
+    public void handlePost(HttpExchange r) throws IOException, JSONException, SQLException {
         String[] splitUrl = r.getRequestURI().getPath().split("/");
         Integer l_id = null;
         String home_address = null;
-        try{
+        try {
             l_id = Integer.parseInt(splitUrl[3]);
             System.out.println(l_id);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Cannot parse the uid in rentavailable/:lid");
             this.sendStatus(r, 500);
             return;
@@ -61,7 +61,7 @@ public class Book extends Endpoint{
                 return;
             }
             jarr = deserialized.getJSONArray("booking_date");
-            for(int i = 0; i<jarr.length(); i++){
+            for (int i = 0; i < jarr.length(); i++) {
                 System.out.println(jarr.get(i).toString());
                 booking_dates.add(jarr.get(i).toString());
             }
@@ -85,34 +85,33 @@ public class Book extends Endpoint{
             email = rs5.getString("email");
             System.out.println("HEREEE");
 
-        }catch(Exception e){
+        } catch (Exception e) {
             this.sendStatus(r, 500);
             System.out.println("Some error in getting homeaddress from Lid in book");
             return;
         }
-        for(int i = 0; i < booking_dates.size(); i++){
+        for (int i = 0; i < booking_dates.size(); i++) {
             System.out.println(booking_dates.get(i) + 1);
-            try{
+            try {
                 this.dao.DeleteAvailability(booking_dates.get(i), home_address);
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Cannot delete the date froma available because of error");
                 this.sendStatus(r, 500);
                 return;
             }
             System.out.println(booking_dates.get(i) + 2);
-            try{
+            try {
                 ResultSet rs3 = this.dao.CheckRenter(email);
                 System.out.println(booking_dates.get(i) + 4);
-                if(rs3.next()){
+                if (rs3.next()) {
                     System.out.println(booking_dates.get(i) + 5);
                     System.out.println("Renter already added. Checking payment_info");
                     String payment_info_db = rs3.getString("payment_info");
-                    if(!payment_info_db.equals(payment_info)){
+                    if (!payment_info_db.equals(payment_info)) {
                         System.out.println("The payment info is not update so it will update now");
                         this.dao.UpdatePaymentInfo(email, payment_info_db);
                     }
-                }
-                else {
+                } else {
                     try {
                         this.dao.AddRenter(email, payment_info);
                     } catch (Exception e) {
@@ -122,23 +121,33 @@ public class Book extends Endpoint{
                     }
                 }
                 System.out.println(booking_dates.get(i) + 3);
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Error in updating payment_info");
                 this.sendStatus(r, 500);
                 return;
             }
-            try{
+            String renter_email = email;
+            String host_email = null;
+            try {
+                ResultSet rs5 = this.dao.GetEmailFromLid(l_id);
+                if (rs5.next()) {
+                    host_email = rs5.getString("email");
+                }
+            } catch (Exception e) {
+                this.sendStatus(r, 500);
+                System.out.println("Not get L_id from Email in book");
+            }
+            try {
                 this.dao.AddBooking(booking_dates.get(i), email, home_address);
-            }catch (Exception e){
+                System.out.println("No error in addbooking");
+                this.dao.AddReview(booking_dates.get(i), renter_email, host_email, home_address);
+            } catch (Exception e) {
                 this.sendStatus(r, 500);
                 System.out.println("Error in add booking");
                 return;
             }
         }
-
         this.sendStatus(r, 200);
         return;
-
     }
 }
-

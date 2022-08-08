@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class RentListing extends Endpoint {
     /**
-     * GET /rentavailable/:l_id
+     * GET /rentlisting/:l_id
      * @body empty
      * @return 200, 400, 500
      * Get all available details about l_id

@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/ApiGateway/pom.xml" />
         <option value="$PROJECT_DIR$/Renter/pom.xml" />
         <option value="$PROJECT_DIR$/Search/pom.xml" />
+        <option value="$PROJECT_DIR$/Bookings/pom.xml" />
       </list>
     </option>
   </component>

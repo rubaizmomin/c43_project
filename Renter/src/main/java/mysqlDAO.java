@@ -56,6 +56,7 @@ public class mysqlDAO {
         this.st.execute(query);
         return;
     }
+
     public void AddBooking(String date, String email, String home_address) throws SQLException {
         String query = "INSERT INTO rents(rent_date, email, home_address) VALUES ('%s', '%s', '%s')";
         query = String.format(query, date, email, home_address);
@@ -64,12 +65,26 @@ public class mysqlDAO {
         return;
     }
 
+    public void AddReview(String date, String renter_email, String host_email, String home_address) throws SQLException {
+        String query = "INSERT INTO review(booking_date, renter_email, host_email, home_address) VALUES ('%s', '%s', '%s', '%s')";
+        query = String.format(query, date, renter_email, host_email, home_address);
+        System.out.println(query);
+        this.st.execute(query);
+        return;
+    }
     public void AddRenter(String email, String payment_info) throws SQLException {
         String query = "INSERT INTO Renter (email, payment_info) VALUES ('%s', '%s')";
         query = String.format(query, email, payment_info);
         this.st.execute(query);
         return;
     }
+
+    public ResultSet GetEmailFromLid(Integer l_id) throws SQLException {
+        String query = "SELECT * FROM Listing natural join owns WHERE l_id = %d";
+        query = String.format(query, l_id);
+        return this.st.executeQuery(query);
+    }
+
     public ResultSet getAvailableDataFromLid(Integer l_id) throws SQLException {
         String query = "select * from available natural join listing where l_id = %d";
         query = String.format(query, l_id);

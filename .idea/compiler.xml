@@ -11,6 +11,7 @@
         <module name="usermicroservice" />
         <module name="Search" />
         <module name="Host" />
+        <module name="Bookings" />
         <module name="amenitymicroservice" />
         <module name="ApiGateway" />
       </profile>
