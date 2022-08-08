@@ -164,7 +164,7 @@ public class Available extends Endpoint{
     }
 
     /**
-     * GET /listing/addavailable/:u_id
+     * GET /listing/available/:u_id
      * @param u_id
      * @return 200, 400, 404, 500
      * GEt all listings owned by uid

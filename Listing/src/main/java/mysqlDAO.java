@@ -58,6 +58,11 @@ public class mysqlDAO {
         return this.st.executeQuery(query);
     }
 
+    public ResultSet getAvailableDatesFromAddress(String home_address) throws SQLException {
+        String query = "SELECT * FROM available WHERE home_address = '%s'";
+        query = String.format(query, home_address);
+        return  this.st.executeQuery(query);
+    }
     public ResultSet getDataThroughLid(Integer l_id) throws SQLException {
         String query = "SELECT * FROM Listing WHERE l_id = %d";
         query = String.format(query, l_id);
