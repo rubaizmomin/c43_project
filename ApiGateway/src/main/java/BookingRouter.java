@@ -54,6 +54,7 @@ public class BookingRouter extends RequestRouter{
             switch (actionString) {
                 // 8000/bookings/:uid
                 case "addreview":
+                case "cancelbooking":
                     String uri = r.getRequestURI().toString();
                     splitUrl = uri.split("/");
                     String[] uriPartsP2 = splitUrl[3].split("\\?");

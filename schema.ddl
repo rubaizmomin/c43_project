@@ -61,8 +61,15 @@ CREATE TABLE has (
     FOREIGN KEY (home_address) REFERENCES Listing (home_address)
 );
 
+CREATE TABLE Cancellation (
+    home_address varchar(30) NOT NULL,
+    email varchar(30) NOT NULL,
+    cancel_date date NOT NULL
+);
+
 CREATE TABLE rents (
 	rent_date date NOT NULL,
+	rent_price double NOT NULL,
 	rating int,
 	comment varchar(30),
     email varchar(30) NOT NULL,

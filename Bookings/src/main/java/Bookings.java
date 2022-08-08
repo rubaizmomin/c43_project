@@ -17,14 +17,15 @@ public class Bookings extends Endpoint{
      */
 
     // the respons will be:
-    //{
     //  bookings : [{
 //                        rent_date: String,
-//                        home_address: String
+//                        home_address: String,
+    //                    l_id : Integer
 //                   },
 //                   {
 //                        rent_date: String,
-//                        home_address: String
+//                        home_address: String,
+    //                    l_id : Integer
 //                   }..]
     //}
     @Override
@@ -56,7 +57,16 @@ public class Bookings extends Endpoint{
                 JSONObject booking = new JSONObject();
                 System.out.println(rs1.getString("rent_date") + rs1.getString("home_address"));
                 booking.put("rent_date", rs1.getString("rent_date"));
-                booking.put("home_address", rs1.getString("home_address"));
+                String home_address = rs1.getString("home_address");
+                booking.put("home_address", home_address);
+                ResultSet rs20 = this.dao.getDataThroughAddress(home_address);
+                if(!rs20.next()){
+                    this.sendStatus(r, 404);
+                    System.out.println("Cannot get data through address");
+                    return;
+                }
+                Integer l_id = rs20.getInt("l_id");
+                booking.put("l_id", l_id);
                 bookingarr.add(booking);
             }
             JSONObject data = new JSONObject();

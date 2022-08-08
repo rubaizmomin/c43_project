@@ -76,6 +76,7 @@ public class mysqlDAO {
         return;
     }
 
+
     public ResultSet CheckDate(String date) throws SQLException {
         String query = "SELECT * FROM Calendar WHERE available_date = '%s'";
         query = String.format(query, date);
