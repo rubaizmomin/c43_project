@@ -44,36 +44,40 @@ public class Bookings extends Endpoint{
             ResultSet rs1 = this.dao.GetBookingsFromUid(u_id);
             System.out.println("HERE");
             ArrayList<JSONObject> bookingarr = new ArrayList<>();
+            ArrayList<String> home_Address_list = new ArrayList<>();
             while(rs1.next()){
                 //  bookings : [{
 //                        rent_date: String,
-//                        home_address: String
+//                        home_address: String,
+                //        l_id : Integer
 //                   },
 //                   {
 //                        rent_date: String,
-//                        home_address: String
+//                        home_address: String,
+                //        l_id : Integer
 //                   }..]
                 //}
                 JSONObject booking = new JSONObject();
-                System.out.println(rs1.getString("rent_date") + rs1.getString("home_address"));
+                System.out.println(rs1.getString("rent_date") + rs1.getString("home_address") + 1);
                 booking.put("rent_date", rs1.getString("rent_date"));
                 String home_address = rs1.getString("home_address");
+                home_Address_list.add(home_address);
                 booking.put("home_address", home_address);
-                ResultSet rs20 = this.dao.getDataThroughAddress(home_address);
-                if(!rs20.next()){
-                    this.sendStatus(r, 404);
-                    System.out.println("Cannot get data through address");
-                    return;
-                }
-                Integer l_id = rs20.getInt("l_id");
-                booking.put("l_id", l_id);
                 bookingarr.add(booking);
+                System.out.println(bookingarr);
+            }
+            for(int i = 0 ; i < home_Address_list.size(); i++){
+                ResultSet rs20 = this.dao.getDataThroughAddress(home_Address_list.get(i));
+                rs20.next();
+                Integer l_id = rs20.getInt("l_id");
+                bookingarr.get(i).put("l_id", l_id);
             }
             JSONObject data = new JSONObject();
             data.put("bookings", bookingarr);
             this.sendResponse(r, data, 200);
             return;
         }catch (Exception e){
+            e.printStackTrace();
             this.sendStatus(r, 500);
             System.out.println("Error in getListingfromEmail and parsing");
             return;

@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d2e98856-ec71-43cc-9f72-eeba38b5b91d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Bookings/src/main/java/CancelBooking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateway/src/main/java/BookingRouter.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateway/src/main/java/BookingRouter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bookings/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bookings/src/main/java/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bookings/src/main/java/Bookings.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bookings/src/main/java/Bookings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bookings/src/main/java/mysqlDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bookings/src/main/java/mysqlDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bookings/target/classes/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/Bookings/target/classes/App.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bookings/target/classes/Bookings.class" beforeDir="false" afterPath="$PROJECT_DIR$/Bookings/target/classes/Bookings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bookings/target/classes/mysqlDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/Bookings/target/classes/mysqlDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Listing/src/main/java/mysqlDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Listing/src/main/java/mysqlDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Listing/target/classes/mysqlDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/Listing/target/classes/mysqlDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schema.ddl" beforeDir="false" afterPath="$PROJECT_DIR$/schema.ddl" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
