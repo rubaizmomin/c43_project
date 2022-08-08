@@ -20,7 +20,11 @@ function HomePage() {
     
     const onBookingHistory = () => {
         navigate('/mybnb/mybooking');
-    }
+    };
+
+    const onReport = (reportBy) => {
+        navigate(`/mybnb/report/${reportBy}`);
+    };
     
     return (
         <div className="home container">
@@ -35,6 +39,11 @@ function HomePage() {
                     <h3>Renter</h3>
                     <button onClick={onSearchListing}>Search Listing</button>
                     <button onClick={onBookingHistory}>Booking History</button>
+                </div>
+                <div className="renter-menu">
+                    <h3>Reports</h3>
+                    <button onClick={() => onReport("city")}>Report by City</button>
+                    <button onClick={() => onReport("postalcode")}>Report by Postal Code</button>
                 </div>
             </div>
         </div>

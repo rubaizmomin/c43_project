@@ -12,6 +12,7 @@ import MyListingAvailable from './components/ListingPage/MyListingAvailable';
 import SearchPage from './components/ListingPage/SearchPage';
 import ListingAvailable from './components/ListingPage/ListingAvailable';
 import MyBooking from './components/BookingPage/MyBooking';
+import ReportPage from './components/ReportPage/ReportPage';
 // Style
 import './App.css';
 
@@ -34,6 +35,9 @@ function App() {
             <Route path="/mybnb/search" element={<SearchPage />} />
             <Route path="/mybnb/search/:l_id" element={<ListingAvailable />} />
             <Route path="/mybnb/mybooking" element={<MyBooking />} />
+            {/* Reports */}
+            <Route path="/mybnb/report/city" element={<ReportPage reportBy={"city"} />} />
+            <Route path="/mybnb/report/postalcode" element={<ReportPage reportBy={"postalcode"} />} />
           </Route>
         </Routes>
       </BrowserRouter>

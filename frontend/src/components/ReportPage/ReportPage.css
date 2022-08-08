@@ -1,0 +1,57 @@
+.listings {
+    margin-top: 30px;
+    width: 1000px;
+    height: 80%;
+}
+
+.listing-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0px 20px;
+    background-color: #eee;
+    width: 100%;
+    height: 40px;
+    font-weight: bold;
+}
+
+.listing-body {
+    padding: 0px 20px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.listing-body button {
+    padding: 3px 13px;
+}
+
+.listing-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Reports */
+.report-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.report-input>.report-category {
+    margin-bottom: 10px;
+}
+
+.report-input>.report-category input,
+.report-input>.report-category button {
+    padding: 5px 10px;
+}
+
+.report-input>.report-category>input {
+    margin-right: 10px;
+}
