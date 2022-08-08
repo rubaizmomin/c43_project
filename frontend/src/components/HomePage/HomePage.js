@@ -18,6 +18,10 @@ function HomePage() {
         navigate('/mybnb/search');
     };
     
+    const onBookingHistory = () => {
+        navigate('/mybnb/mybooking');
+    }
+    
     return (
         <div className="home container">
             <h1>HomePage</h1>
@@ -30,6 +34,7 @@ function HomePage() {
                 <div className="renter-menu">
                     <h3>Renter</h3>
                     <button onClick={onSearchListing}>Search Listing</button>
+                    <button onClick={onBookingHistory}>Booking History</button>
                 </div>
             </div>
         </div>
