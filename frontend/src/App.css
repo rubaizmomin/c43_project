@@ -38,3 +38,9 @@ html {
 .table.large {
   width: 500px;
 }
+
+.cancel-button {
+  border: solid 2px tomato;
+  border-radius: 2.5px;
+  color: tomato;
+}

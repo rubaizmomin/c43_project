@@ -264,3 +264,86 @@
     padding: 5px 20px;
     border: solid 1px #ddd;
 }
+
+/* Listing Page */
+.select-listing {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1000px;
+}
+
+.select-listing .availability-list {
+    width: 765px;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.select-listing .total-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 80px;
+    width: 300px;
+    height: 500px;
+}
+
+.select-listing .total-price {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border: solid 1px #ddd;
+    width: 100%;
+    height: 100%;
+}
+
+.select-listing .total-price>.total-listings {
+    padding: 0px 20px;
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.select-listing .total-price .total-rent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-listing .total-price .total-rent p:not(:last-child) {
+    margin-right: 20px;
+}
+
+.select-listing .total-price>p {
+    border-top: solid 1px #ddd;
+    padding-top: 10px;
+    width: 80%;
+}
+
+.select-listing .total-info>button {
+    padding: 20px;
+    width: 100%;
+}
+
+.select-listing .availability-info p {
+    margin: 5px 0;
+}
+
+.select-listing .availability-info button {
+    margin: 20px 0 5px 0;
+    padding: 3px 13px;
+}
+
+.listing-payment {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.listing-payment input {
+    padding: 5px 15px;
+    width: 50%;
+}

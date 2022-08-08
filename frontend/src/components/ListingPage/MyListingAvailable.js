@@ -141,7 +141,7 @@ function MyListingAvailable() {
             return (
                 <div key={index} className="availability-info">
                     <p>{available.available_date}</p>
-                    <p>$ {available.rental_price}</p>
+                    <p>${available.rental_price}</p>
                 </div>
             );
         }) : <div>No available dates</div>;
@@ -174,7 +174,7 @@ function MyListingAvailable() {
                         <p>Dates to Add:</p>
                         <p>{NewAvailability.length === 0 ? "" : `[${NewAvailability.toString().replaceAll(',', ', ')}]`}</p>
                         <p>Rental Price:</p>
-                        <p>{`$ ${RentalPrice}`}</p>
+                        <p>{`$${RentalPrice}`}</p>
                     </div>
                 </div>
                 <button onClick={addAvailability}>Add Availability</button>

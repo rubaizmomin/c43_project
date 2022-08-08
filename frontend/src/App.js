@@ -10,6 +10,7 @@ import AddListingPage from './components/ListingPage/AddListingPage';
 import MyListing from './components/ListingPage/MyListing';
 import MyListingAvailable from './components/ListingPage/MyListingAvailable';
 import SearchPage from './components/ListingPage/SearchPage';
+import ListingAvailable from './components/ListingPage/ListingAvailable';
 // Style
 import './App.css';
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/mybnb/mylisting/:l_id" element={<MyListingAvailable />} />
             {/* Renter Menu */}
             <Route path="/mybnb/search" element={<SearchPage />} />
+            <Route path="/mybnb/search/:l_id" element={<ListingAvailable />} />
           </Route>
         </Routes>
       </BrowserRouter>
