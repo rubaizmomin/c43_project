@@ -17,6 +17,7 @@ public class App {
         server.createContext("/rent", new RenterRouter());
         server.createContext("/search", new SearchRouter());
         server.createContext("/bookings", new BookingRouter());
+        server.createContext("/report", new ReportRouter());
         server.start();
         System.out.printf("Server started on port %d...\n", PORT);
     }

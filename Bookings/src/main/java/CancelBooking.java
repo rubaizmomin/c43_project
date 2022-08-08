@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CancelBooking extends Endpoint{
-    //bookings/cancelbooking/:l_id?u_id=u_id
+    //bookings/cancelbooking/:l_id?u_id=:u_id
     //POST REQUEST.
     //Body:{
     //          cancel_date : ["2022-10-15", "2022-10-16"]
