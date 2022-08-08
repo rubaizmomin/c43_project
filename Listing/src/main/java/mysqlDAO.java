@@ -99,5 +99,11 @@ public class mysqlDAO {
         query = String.format(query, email);
         return this.st.executeQuery(query);
     }
+
+    public ResultSet getListingfromId(Integer l_id) throws SQLException {
+        String query = "SELECT * FROM listing WHERE l_id = %d";
+        query = String.format(query, l_id);
+        return this.st.executeQuery(query);
+    }
 }
 

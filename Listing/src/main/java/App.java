@@ -13,8 +13,8 @@ public class App {
         server.createContext("/listing/addavailable", new Available());
         server.createContext("/listing/addlisting", new AddListing());
         server.createContext("/listing/listingavailability", new ListingAvailability());
+        server.createContext("/listing/getlisting/", new GetListing());
 
-//        server.createContext("/user/register", new Register());
         server.start();
         System.out.printf("Server started on port %d...\n", PORT);
     }

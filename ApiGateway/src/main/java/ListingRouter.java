@@ -80,6 +80,7 @@ public class ListingRouter extends RequestRouter{
         }
         String actionString = splitUrl[2];
         switch (actionString) {
+            case "getlisting":
             case "listingavailability":
             case "addavailable":
                 try{
