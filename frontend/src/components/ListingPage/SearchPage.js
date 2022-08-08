@@ -228,7 +228,7 @@ function SearchPage() {
 
     const listingListTitle = () => {
         return (
-            <div className="search-header">
+            <div className="listing-header">
                 <p className="table small">Listing Id</p>
                 <p className="table medium">Listing Type</p>
                 <p className="table large">Home Address</p>
@@ -244,7 +244,7 @@ function SearchPage() {
         ? ListingList.map((listing, index) => {
             console.log(listing);
             return (
-                <div key={index} className="search-listing-info">
+                <div key={index} className="listing-info">
                     <p className="table small">{listing.l_id}</p>
                     <p className="table medium">{listing.listing_type}</p>
                     <p className="table large">{listing.home_address}</p>
@@ -305,10 +305,10 @@ function SearchPage() {
             <div className="filter-button">
                 <button onClick={onSearch}>Search</button>
             </div>
-            <div className="search-listings">
+            <div className="listings">
                 <h3>Available Listings</h3>
                 {listingListTitle()}
-                <div className="search-body">{listingList}</div>
+                <div className="listing-body">{listingList}</div>
             </div>
         </div>
     );

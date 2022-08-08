@@ -12,6 +12,7 @@ html {
   justify-content: center;
   align-items: center;
   width: 100vw;
+  min-width: 1200px;
   height: 100vh;
   text-align: center;
 }
@@ -22,5 +23,18 @@ html {
   justify-content: center;
   align-items: center;
   width: 100%;
+  min-width: 1200px;
   height: 100%;
+}
+
+.table.small {
+  width: 150px;
+}
+
+.table.medium {
+  width: 300px;
+}
+
+.table.large {
+  width: 500px;
 }

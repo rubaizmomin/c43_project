@@ -7,8 +7,9 @@ import RegisterPage from './components/AuthPage/RegisterPage';
 import LoginPage from './components/AuthPage/LoginPage';
 import HomePage from './components/HomePage/HomePage';
 import AddListingPage from './components/ListingPage/AddListingPage';
-import SearchPage from './components/ListingPage/SearchPage';
 import MyListing from './components/ListingPage/MyListing';
+import MyListingAvailable from './components/ListingPage/MyListingAvailable';
+import SearchPage from './components/ListingPage/SearchPage';
 // Style
 import './App.css';
 
@@ -23,8 +24,11 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/mybnb" element={<AuthorizedUser />}>
             <Route path="/mybnb" element={<HomePage />} />
+            {/* Host Menu */}
             <Route path="/mybnb/addlisting" element={<AddListingPage />} />
             <Route path="/mybnb/mylisting" element={<MyListing />} />
+            <Route path="/mybnb/mylisting/:l_id" element={<MyListingAvailable />} />
+            {/* Renter Menu */}
             <Route path="/mybnb/search" element={<SearchPage />} />
           </Route>
         </Routes>
