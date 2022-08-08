@@ -29,8 +29,7 @@ public class RenterRouter extends RequestRouter{
                         this.sendStatus(r, 500);
                         return;
                     }
-                    String bodyStr = Utils.convert(r.getRequestBody());
-                    JSONObject bodyJson = new JSONObject(bodyStr);
+                    JSONObject bodyJson = new JSONObject();
                     String bodyJsonStr = bodyJson.toString();
                     System.out.println(bodyJsonStr);
                     HttpResponse<String> s = this.sendRequestPost(r.getRequestMethod(), url, r.getRequestURI().toString(), bodyJsonStr);

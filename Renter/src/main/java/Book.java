@@ -18,7 +18,7 @@ public class Book extends Endpoint{
 //                        ]
 //    }rent/book/l_id
     @Override
-    public void handlePost(HttpExchange r) throws IOException, JSONException, SQLException {
+    public void handlePost(HttpExchange r) throws IOException, JSONException {
         String[] splitUrl = r.getRequestURI().getPath().split("/");
         Integer l_id = null;
         String home_address = null;
