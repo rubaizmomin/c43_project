@@ -1,0 +1,46 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.mybnb {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  min-width: 1200px;
+  height: 100vh;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 1200px;
+  height: 100%;
+}
+
+.table.small {
+  width: 150px;
+}
+
+.table.medium {
+  width: 300px;
+}
+
+.table.large {
+  width: 500px;
+}
+
+.cancel-button {
+  border: solid 2px tomato;
+  border-radius: 2.5px;
+  color: tomato;
+}

@@ -1,0 +1,349 @@
+/* Add Listing Page */
+.addlisting-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.addlisting-container>.addlisting-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border: solid 1px #aaaaaa;
+    padding: 20px;
+    width: 400px;
+}
+
+.addlisting-container>.addlisting-form>p {
+    margin-bottom: 5px;
+}
+
+.addlisting-container>.addlisting-form>select {
+    margin-bottom: 5px;
+    padding: 5px;
+    width: 100%;
+}
+
+.addlisting-container>.addlisting-form>input {
+    margin-bottom: 5px;
+    padding: 5px;
+    width: 100%;
+    overflow-x:visible;
+}
+
+.addlisting-container>.addlisting-form>.addlisting-amenity {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.addlisting-container>.addlisting-form>.addlisting-amenity .addlisting-checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.addlisting-container .addlisting-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.addlisting-container .addlisting-button>button {
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+
+/* Search Page */
+.search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.search>.search-bar {
+    margin-bottom: 10px;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    padding: 10px 15px;
+    width: 1000px;
+}
+
+.search>.search-filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.search>.search-filters>.filter-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search>.search-filters>.filter-list>.filter-category {
+    margin-right: 20px;
+    border-radius: 5px;
+    padding: 5px 15px;
+    width: 140px;
+    background-color: aquamarine;
+    font-weight: bold;
+}
+
+.search>.search-filters>.filter-list>.filter-checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search>.search-filters>.filter-list>.filter-checkbox>.filter-check {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.search>.search-filters>.filter-list>select {
+    padding: 3px 8px;
+}
+
+.search>.search-filters>.filter-list>input {
+    padding: 3px 8px;
+}
+
+.search>.search-filters>.filter-list>input:not(:last-child) {
+    margin-right: 10px;
+}
+
+.search>.search-filters>.filter-list>div:not(:last-child) {
+    margin-right: 10px;
+}
+
+.search>.filter-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.search>.filter-button button {
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+
+/* Listing Table */
+.listings {
+    margin-top: 30px;
+    width: 1000px;
+    height: 80%;
+}
+
+.listing-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0px 20px;
+    background-color: #eee;
+    width: 100%;
+    height: 40px;
+    font-weight: bold;
+}
+
+.listing-body {
+    padding: 0px 20px;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.listing-body button {
+    padding: 3px 13px;
+}
+
+.listing-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* My Listing Availability */
+.listings.available {
+    margin-bottom: 30px;
+    height: auto;
+}
+
+.add-availability {
+    margin-bottom: 30px;
+}
+
+.add-availability button {
+    padding: 5px 10px;
+}
+
+.add-availability>.add-availability-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-availability>.add-availability-info>div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.add-availability>.add-availability-info>div:last-child {
+    border: solid 1px #ddd;
+    padding: 0px 20px;
+    width: 300px;
+    text-overflow: auto;
+}
+
+.add-availability .available-date {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-availability .available-date:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.add-availability .available-date input {
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+
+.add-availability>button {
+    margin-top: 20px;
+}
+
+.mylisting-availability {
+    width: 1000px;
+}
+
+.availability-list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    /* max-height: 100px; */
+}
+
+.availability-list .availability-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 5px 20px;
+    border: solid 1px #ddd;
+}
+
+/* Listing Page */
+.select-listing {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1000px;
+}
+
+.select-listing .availability-list {
+    width: 765px;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.select-listing .total-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 80px;
+    width: 300px;
+    height: 500px;
+}
+
+.select-listing .total-price {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border: solid 1px #ddd;
+    width: 100%;
+    height: 100%;
+}
+
+.select-listing .total-price>.total-listings {
+    padding: 0px 20px;
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.select-listing .total-price .total-rent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-listing .total-price .total-rent p:not(:last-child) {
+    margin-right: 20px;
+}
+
+.select-listing .total-price>p {
+    border-top: solid 1px #ddd;
+    padding-top: 10px;
+    width: 80%;
+}
+
+.select-listing .total-info>button {
+    padding: 20px;
+    width: 100%;
+}
+
+.select-listing .availability-info p {
+    margin: 5px 0;
+}
+
+.select-listing .availability-info button {
+    margin: 20px 0 5px 0;
+    padding: 3px 13px;
+}
+
+.listing-payment {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.listing-payment input {
+    padding: 5px 15px;
+    width: 50%;
+}
