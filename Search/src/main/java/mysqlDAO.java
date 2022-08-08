@@ -24,6 +24,7 @@ public class mysqlDAO {
         return this.st.executeQuery(query);
     }
 
+
     public ResultSet filterwithoutquery(String condition) throws SQLException {
         String query = "select home_address, l_id, listing_type, postal_code, city, country from listing natural join has natural join available %s";
         query = String.format(query, condition);

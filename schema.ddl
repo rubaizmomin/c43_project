@@ -14,7 +14,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Renter (
-    payment_info int UNIQUE,
+    payment_info char(12) UNIQUE DEFAULT NULL,
     email varchar(30) NOT NULL,
     FOREIGN KEY (email) REFERENCES Users (email)
 );
